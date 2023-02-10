@@ -1,0 +1,32 @@
+﻿@page "/exercise"
+@inject ExerciseService exerciseService;
+@using Examensarbete.Shared.Model;
+
+<p>heeej</p>
+<MudGrid>
+    @foreach (var item in exerciseService.ExerciseList)
+    {
+        <MudItem sx="6" sm="6">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" @onclick="(() => PickExercise(item))">@item.Name</MudPaper>
+        </MudItem>
+
+    }
+</MudGrid>
+
+@code {
+    ExerciseModel test = new();
+    List<ExerciseModel> pickExercise = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await exerciseService.GetExercises();
+        test = await exerciseService.GetSingelEx(1);
+
+    }
+    public void PickExercise(ExerciseModel exercise)
+    {
+        pickExercise.Add(exercise);
+
+    }
+}
+
