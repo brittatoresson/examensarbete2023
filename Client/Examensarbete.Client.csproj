@@ -28,9 +28,11 @@
     <None Remove="Services\" />
     <None Remove="Services\ExerciseService\" />
     <None Remove="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
+    <None Remove="Components\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Services\ExerciseService\" />
+    <Folder Include="Components\" />
   </ItemGroup>
 </Project>
