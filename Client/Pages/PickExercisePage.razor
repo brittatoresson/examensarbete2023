@@ -1,7 +1,8 @@
 ﻿@page "/exercise"
 @inject ExerciseService exerciseService;
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @using Examensarbete.Shared.Model;
-@using MudBlazor;
+@using Newtonsoft.Json;
 
 <MudGrid>
     @foreach (var item in exerciseService.ExerciseList)
@@ -12,8 +13,9 @@
 
     }
 </MudGrid>
-<Examensarbete.Client.Components.Timer></Examensarbete.Client.Components.Timer>
+<button @onclick="GetSessionState">Session</button>
 
+<MudButton @onclick="SaveExercises">Go!</MudButton>
 
 @code {
     ExerciseModel test = new();
@@ -21,7 +23,7 @@
 
     ExerciseModel NY = new();
 
-protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         await exerciseService.GetExercises();
         test = await exerciseService.GetSingelEx(1);
@@ -29,14 +31,24 @@ protected override async Task OnInitializedAsync()
     }
     public async Task PickExercise(ExerciseModel exercise)
     {
-        NY.ID = 4;
-        NY.Name = "hej";
-        NY.Type = "snabb";
+        //NY.ID = 4;
+        //NY.Name = "hej";
+        //NY.Type = "snabb";
         pickExercise.Add(exercise);
-        await exerciseService.CreateWorkout(NY);
+        //await exerciseService.CreateWorkout(NY);
         //await exerciseService.CreateWorkout(pickExercise);
+    }
 
+    public async Task SaveExercises()
+    {
+        await sessionStorage.SetItemAsync("Exercise", pickExercise);
 
+    }
+    public async Task GetSessionState()
+    {
+        var name = await sessionStorage.GetItemAsync<string>("Exercise");
+
+        List<ExerciseModel> myCustomObject = JsonConvert.DeserializeObject<List<ExerciseModel>>(name);
     }
 }
 
