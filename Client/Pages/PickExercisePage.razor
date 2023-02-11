@@ -1,6 +1,7 @@
 ﻿@page "/exercise"
 @inject ExerciseService exerciseService;
 @using Examensarbete.Shared.Model;
+@using MudBlazor;
 
 <p>heeej</p>
 <MudGrid>
@@ -13,19 +14,28 @@
     }
 </MudGrid>
 
+
 @code {
     ExerciseModel test = new();
     List<ExerciseModel> pickExercise = new();
 
-    protected override async Task OnInitializedAsync()
+    ExerciseModel NY = new();
+
+protected override async Task OnInitializedAsync()
     {
         await exerciseService.GetExercises();
         test = await exerciseService.GetSingelEx(1);
 
     }
-    public void PickExercise(ExerciseModel exercise)
+    public async Task PickExercise(ExerciseModel exercise)
     {
+        NY.ID = 4;
+        NY.Name = "hej";
+        NY.Type = "snabb";
         pickExercise.Add(exercise);
+        await exerciseService.CreateWorkout(NY);
+        //await exerciseService.CreateWorkout(pickExercise);
+
 
     }
 }

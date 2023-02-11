@@ -19,7 +19,6 @@ namespace Examensarbete.Server.Controllers
         }
 
         [HttpGet]
-        //[Route("test")]
         public async Task<ActionResult<List<ExerciseModel>>> GetData()
         {
             var exerciseList = await _context.Exercises.ToListAsync();
@@ -38,5 +37,28 @@ namespace Examensarbete.Server.Controllers
 
             return Ok(exercise);
         }
+
+        //[HttpPost]
+        //public async Task<ActionResult<ExerciseModel>> CreateWorkout(ExerciseModel workout)
+        //{
+        //    _context.Exercises.Add(workout);
+        //    await _context.SaveChangesAsync();
+        //    //return Ok(workout);
+        //    return Ok(await GetData());
+        //}
+
+        [HttpPost]
+        public async Task<ActionResult<List<ExerciseModel>>> CreateSuperHero(ExerciseModel hero)
+        {
+
+            //hero = null;
+            _context.Exercises.Add(hero);
+            await _context.SaveChangesAsync();
+
+            return Ok(await GetData());
+        }
+
+
+
     }
 }
