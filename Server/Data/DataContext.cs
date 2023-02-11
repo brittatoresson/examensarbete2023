@@ -21,8 +21,10 @@ namespace Examensarbete.Server.Data
                  new ExerciseModel { ID = 2, Name = "Ski", Type = "Fast" },
                  new ExerciseModel { ID = 3, Name = "Row", Type = "Steady" }
                 );
+
         }
         //oklart vad denna gör
         public DbSet<ExerciseModel> Exercises { get; set; }
+   
     }
 }
