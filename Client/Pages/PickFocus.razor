@@ -1,0 +1,42 @@
+﻿@page "/focus"
+@using MudBlazor
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@using Newtonsoft.Json;
+
+@foreach (var item in focus)
+{
+    <p @onclick="(() => SetFocus(item))">@item.Name</p>
+}
+
+<p @onclick="GetSessionState">Get session</p>
+
+@code {
+    public class Focus
+    {
+        public string Name;
+    }
+
+    List<Focus> focus = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        focus.Add(new Focus { Name = "Intervall" });
+        focus.Add(new Focus { Name = "Steady" });
+        focus.Add(new Focus { Name = "Strength" });
+        focus.Add(new Focus { Name = "Teknik" });
+        focus.Add(new Focus { Name = "Uthållighet" });
+    }
+
+
+    public async Task SetFocus(Focus focus)
+    {
+        await sessionStorage.SetItemAsync("Focus", focus.Name);
+
+    }
+    public async Task GetSessionState()
+    {
+        var name = await sessionStorage.GetItemAsync<string>("Focus");
+        //Focus myCustomObject = JsonConvert.DeserializeObject<Focus>(name);
+    }
+}

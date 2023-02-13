@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 using Examensarbete.Shared;
 using Examensarbete.Shared.Model;
 using Microsoft.AspNetCore.Components;
+using Newtonsoft.Json;
+using static System.Net.WebRequestMethods;
+using static Examensarbete.Client.Pages.PickExercisePage;
 
 namespace Examensarbete.Client.Services.ExerciseService
 {
@@ -37,6 +42,8 @@ namespace Examensarbete.Client.Services.ExerciseService
             ExerciseList = result;
         }
 
+        WorkoutModel workout = new();
+
         public async Task CreateWorkout(List<ExerciseModel> exercise)
         {
             var result = await _http.PostAsJsonAsync("api/test", exercise);
@@ -46,9 +53,17 @@ namespace Examensarbete.Client.Services.ExerciseService
 
         public async Task CreateWorkout(ExerciseModel exercise)
         {
-            var result = await _http.PostAsJsonAsync("api/test", exercise);
-            var response = await result.Content.ReadFromJsonAsync<ExerciseModel>();
-            Exercise = response;
+            //workout.Date = DateTime.Now;
+            //workout.Exercise = " ny övningar";
+            //workout.ID = 12;
+            //workout.Repetitions = 32;
+            //workout.Rounds = 3;
+            //workout.TotalTime = 12;
+
+            var result = await _http.PostAsJsonAsync("api/test", workout);
+            var content = await result.Content.ReadFromJsonAsync<ExerciseModel>();
+
+            //Exercise = response;
         }
     }
 }

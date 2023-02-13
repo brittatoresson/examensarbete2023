@@ -1,14 +1,16 @@
 ﻿@page "/exercise"
 @inject ExerciseService exerciseService;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 @using Examensarbete.Shared.Model;
 @using Newtonsoft.Json;
+@inject HttpClient Http
 
 <MudGrid>
     @foreach (var item in exerciseService.ExerciseList)
     {
-        <MudItem sx="6" sm="6">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" @onclick="(() => PickExercise(item))">@item.Name</MudPaper>
+        <MudItem sm="4" sx="12">
+            <MudPaper Class="d-flex align-center justify-center py-8" Style="width:20vw; height:20vw" @onclick="(() => PickExercise(item))">@item.Name</MudPaper>
         </MudItem>
 
     }
@@ -16,6 +18,10 @@
 <button @onclick="GetSessionState">Session</button>
 
 <MudButton @onclick="SaveExercises">Go!</MudButton>
+
+
+<MudButton @onclick="(() => Navigate(Constants.focuse))">Next</MudButton>
+<MudButton @onclick="(()=>RandomRepetitions())"> randomreps</MudButton>
 
 @code {
     ExerciseModel test = new();
@@ -26,17 +32,14 @@
     protected override async Task OnInitializedAsync()
     {
         await exerciseService.GetExercises();
-        test = await exerciseService.GetSingelEx(1);
+        //test = await exerciseService.GetSingelEx(1);
 
     }
     public async Task PickExercise(ExerciseModel exercise)
     {
-        //NY.ID = 4;
-        //NY.Name = "hej";
-        //NY.Type = "snabb";
         pickExercise.Add(exercise);
-        //await exerciseService.CreateWorkout(NY);
-        //await exerciseService.CreateWorkout(pickExercise);
+        //await exerciseService.CreateWorkout(exercise);
+      
     }
 
     public async Task SaveExercises()
@@ -44,11 +47,65 @@
         await sessionStorage.SetItemAsync("Exercise", pickExercise);
 
     }
+
+    List<ExerciseModel> myCustomObject;
+
     public async Task GetSessionState()
     {
         var name = await sessionStorage.GetItemAsync<string>("Exercise");
 
-        List<ExerciseModel> myCustomObject = JsonConvert.DeserializeObject<List<ExerciseModel>>(name);
+        myCustomObject = JsonConvert.DeserializeObject<List<ExerciseModel>>(name);
+        //GET RANDOM LIST OF EXERCISE
+        var repetitions = RandomRepetitions();
+        var randomExercise = RandomExercise();
+
+        List<Workout> exerciseList = new();
+        Ny workout = new();
+
+        workout.Exercise = randomExercise.Name;
+        //workout.Type = randomExercise.Type;
+        workout.TotalTime = 30;
+        workout.Repetition = repetitions;
+
+        await Http.PostAsJsonAsync("api/Ny", workout);
+        
+    }
+
+    public ExerciseModel RandomExercise()
+    {
+        Random random = new();
+        var randomInt = random.Next(myCustomObject.Count);
+        ExerciseModel randomExercise = myCustomObject[randomInt];
+        return randomExercise;
+    }
+    public int RandomRepetitions()
+    {
+        Random random = new();
+        var randomRepetitions = random.Next(100);
+        return randomRepetitions;
+    }
+
+
+    // gör till en egen class
+    static class Constants
+    {
+        public const string exercise = "exercise";
+        public const string focuse = "focus";
+        public const string home = "home";
+    }
+    //gör till en egen komponent
+    public void Navigate(string url)
+    {
+        NavigationManger.NavigateTo(url);
+    }
+
+
+    public class Workout
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public int Time { get; set; }
+        public int Repetitions { get; set; }
     }
 }
 

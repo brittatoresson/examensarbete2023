@@ -1,20 +1,25 @@
-﻿using Examensarbete.Server.Data;
+﻿using Examensarbete.Server.Interface;
+using Examensarbete.Server.Data;
+using Examensarbete.Server.Models;
+using Examensarbete.Server.Services;
+using Examensarbete.Server.Controllers;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Examensarbete.Shared.Model;
+using System.Diagnostics.Metrics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+//Behövs båda?
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString:DefaultConnection"]));
-//builder.Services.AddDbContext<SaveContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString:DefaultConnection"]));
-//builder.Services.AddDbContext<DataContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddDbContext<DatabaseContextNy>
+(options =>
+options.UseSqlServer(builder.Configuration["ConnectionString:DefaultConnection"]));
+builder.Services.AddTransient<INy, NyManager>();
 
 var app = builder.Build();
 
@@ -36,7 +41,6 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 
 app.MapRazorPages();
 app.MapControllers();
