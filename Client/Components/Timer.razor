@@ -1,71 +1,20 @@
-﻿@using System.Timers;
-<MudGrid>
-
-    <MudItem sx="6" sm="6">
-        <MudPaper Class="pa-8">
-            <MudText>@timeLeft</MudText>
-            <MudSlider @bind-Value="@min" Max="120">Välj antal minuter: @min min</MudSlider>
-
-            @if (!startBtn)
-            {
-                <MudButton @onclick="StartTimer" Color="Color.Primary" Disabled="@(min > 0 ? false: true)">Go!</MudButton>
-            }
-            else
-            {
-                <MudButton @onclick="PauseTimer"> @(pause ? "resume" : "pause")</MudButton>
-                <MudButton @onclick="StopTimer"> Stop</MudButton>
-            }
-
-
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+﻿
+<MudSlider @bind-Value="@Minutes" Max="120" @onclick="UpdateMinutesValue">Välj antal minuter: @Minutes min</MudSlider>
 
 @code {
-    public int min;
-    public TimeSpan timeLeft;
-    TimeSpan TimeLeft;
-    public bool pause;
-    public bool startBtn;
+    [Parameter]
+    public int Minutes { get; set; }
+    [Parameter]
+    public bool Disable { get; set; }
 
-    public async Task StartTimer()
-    {
-        startBtn = true;
-        TimeLeft = new TimeSpan(0, min, 3);
+    //Two-way binidng behövs för att uppdatera kompoentet/värder i parentkomponenter https://blazor-university.com/components/two-way-binding/
+    [Parameter]
+    public EventCallback<int> MinutesChanged { get; set; }
 
-        while (TimeLeft > new TimeSpan() && pause == false)
-        {
-            await Task.Delay(1000);
-            TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
-            timeLeft = TimeLeft;
-            StateHasChanged();
-        }
+    async Task UpdateMinutesValue()
+    {
+        await MinutesChanged.InvokeAsync(Minutes);
     }
+     
 
-    public async Task PauseTimer()
-    {
-        pause = !pause;
-        if (pause == false)
-        {
-            ContinueTimer();
-        }
-    }
-
-    public async Task ContinueTimer()
-    {
-        while (TimeLeft > new TimeSpan() && pause == false)
-        {
-            await Task.Delay(1000);
-            TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
-            timeLeft = TimeLeft;
-            StateHasChanged();
-        }
-    }
-    public void StopTimer()
-    {
-        startBtn = false;
-        TimeLeft = new TimeSpan(0, 0, 1);
-        min = 0;
-        StateHasChanged();
-    }
 }

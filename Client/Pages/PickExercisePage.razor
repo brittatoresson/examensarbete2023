@@ -3,6 +3,7 @@
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 @using Examensarbete.Shared.Model;
+@using Examensarbete.Client.Components;
 @using Newtonsoft.Json;
 @inject HttpClient Http
 
@@ -10,23 +11,22 @@
     @foreach (var item in exerciseService.ExerciseList)
     {
         <MudItem sm="4" sx="12">
-            <MudPaper Class="d-flex align-center justify-center py-8" Style="width:20vw; height:20vw" @onclick="(() => PickExercise(item))">@item.Name</MudPaper>
-        </MudItem>
-
-    }
+            <MudCard Class="@(item.isActive ? "" :"activeExercise")" 
+                       @onclick="(() => PickExercise(item))">@item.Name</MudCard>
+                </MudItem>
+            }
 </MudGrid>
 <button @onclick="GetSessionState">Session</button>
 
 <MudButton @onclick="SaveExercises">Go!</MudButton>
+<NavigationButton Url="focus" />
 
-
-<MudButton @onclick="(() => Navigate(Constants.focuse))">Next</MudButton>
 <MudButton @onclick="(()=>RandomRepetitions())"> randomreps</MudButton>
+
 
 @code {
     ExerciseModel test = new();
     List<ExerciseModel> pickExercise = new();
-
     ExerciseModel NY = new();
 
     protected override async Task OnInitializedAsync()
@@ -37,9 +37,9 @@
     }
     public async Task PickExercise(ExerciseModel exercise)
     {
+        exercise.isActive = true;
         pickExercise.Add(exercise);
         //await exerciseService.CreateWorkout(exercise);
-      
     }
 
     public async Task SaveExercises()
@@ -59,7 +59,6 @@
         var repetitions = RandomRepetitions();
         var randomExercise = RandomExercise();
 
-        List<Workout> exerciseList = new();
         Ny workout = new();
 
         workout.Exercise = randomExercise.Name;
@@ -68,7 +67,6 @@
         workout.Repetition = repetitions;
 
         await Http.PostAsJsonAsync("api/Ny", workout);
-        
     }
 
     public ExerciseModel RandomExercise()
@@ -85,27 +83,11 @@
         return randomRepetitions;
     }
 
-
-    // gör till en egen class
-    static class Constants
-    {
-        public const string exercise = "exercise";
-        public const string focuse = "focus";
-        public const string home = "home";
-    }
-    //gör till en egen komponent
+    ////flytta till constant?
     public void Navigate(string url)
     {
         NavigationManger.NavigateTo(url);
     }
 
-
-    public class Workout
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public int Time { get; set; }
-        public int Repetitions { get; set; }
-    }
 }
 

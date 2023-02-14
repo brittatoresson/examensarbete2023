@@ -1,0 +1,14 @@
+﻿@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
+
+<MudButton @onclick="Navigate">Next</MudButton>
+
+@code {
+    [Parameter]
+    public string? Url { get; set;}
+
+        public void Navigate()
+        {
+            NavigationManger.NavigateTo(Url);
+        }
+    }
+

@@ -17,7 +17,6 @@ builder.Services.AddMudServices();
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddBlazoredSessionStorageAsSingleton();
 
-
 //builder.Services.AddScoped<IExerciseService, ExerciseService>();
 builder.Services.AddScoped<Examensarbete.Client.Services.ExerciseService.ExerciseService>();
 await builder.Build().RunAsync();
