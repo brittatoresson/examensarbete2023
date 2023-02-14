@@ -11,5 +11,6 @@ namespace Examensarbete.Shared.Model
         public int Rounds { get; set; }
         public int Repetitions { get; set; }
         public DateTime Date { get; set; } = DateTime.Today;
+        //public string Type { get; set; }
     }
 }

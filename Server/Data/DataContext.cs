@@ -32,6 +32,6 @@ namespace Examensarbete.Server.Data
         //oklart vad denna gör
         public DbSet<ExerciseModel> Exercises { get; set; }
         //Behöver mer göras här??
-        public DbSet<WorkoutModel> Workout { get; set; }
+        //public DbSet<WorkoutModel> Workout { get; set; }
     }
 }

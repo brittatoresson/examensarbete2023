@@ -13,10 +13,10 @@ namespace Examensarbete.Server.Models
             : base(options)
         {
         }
-        public virtual DbSet<Ny> Ny { get; set; } = null!;
+        public virtual DbSet<NyWorkoutModel> Ny { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Ny>(entity =>
+            modelBuilder.Entity<NyWorkoutModel>(entity =>
             {
                 entity.ToTable("workout");
                 entity.Property(e => e.id).HasColumnName("id");

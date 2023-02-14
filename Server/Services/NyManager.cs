@@ -15,7 +15,7 @@ namespace Examensarbete.Server.Services
             _dbContext = dbContext;
         }
         //To Get all user details
-        public List<Ny> GetUserDetails()
+        public List<NyWorkoutModel> GetUserDetails()
         {
             try
             {
@@ -27,7 +27,7 @@ namespace Examensarbete.Server.Services
             }
         }
         //To Add new user record
-        public void AddUser(Ny user)
+        public void AddUser(NyWorkoutModel user)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Examensarbete.Server.Services
             }
         }
         //To Update the records of a particluar user
-        public void UpdateUserDetails(Ny user)
+        public void UpdateUserDetails(NyWorkoutModel user)
         {
             try
             {
@@ -53,11 +53,11 @@ namespace Examensarbete.Server.Services
             }
         }
         //Get the details of a particular user
-        public Ny GetUserData(int id)
+        public NyWorkoutModel GetUserData(int id)
         {
             try
             {
-                Ny? user = _dbContext.Ny.Find(id);
+                NyWorkoutModel? user = _dbContext.Ny.Find(id);
                 if (user != null)
                 {
                     return user;
@@ -77,7 +77,7 @@ namespace Examensarbete.Server.Services
         {
             try
             {
-                Ny? user = _dbContext.Ny.Find(id);
+                NyWorkoutModel? user = _dbContext.Ny.Find(id);
                 if (user != null)
                 {
                     _dbContext.Ny.Remove(user);

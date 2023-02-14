@@ -16,14 +16,14 @@ namespace Examensarbete.Server.Controllers
             _INy = iNy;
         }
         [HttpGet]
-        public async Task<List<Ny>> Get()
+        public async Task<List<NyWorkoutModel>> Get()
         {
             return await Task.FromResult(_INy.GetUserDetails());
         }
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            Ny ny = _INy.GetUserData(id);
+            NyWorkoutModel ny = _INy.GetUserData(id);
             if (ny != null)
             {
                 return Ok(ny);
@@ -31,12 +31,12 @@ namespace Examensarbete.Server.Controllers
             return NotFound();
         }
         [HttpPost]
-        public void Post(Ny ny)
+        public void Post(NyWorkoutModel ny)
         {
             _INy.AddUser(ny);
         }
         [HttpPut]
-        public void Put(Ny ny)
+        public void Put(NyWorkoutModel ny)
         {
             _INy.UpdateUserDetails(ny);
         }

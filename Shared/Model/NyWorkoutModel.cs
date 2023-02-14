@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Examensarbete.Shared.Model
 
 {
-    public class Ny
+    public class NyWorkoutModel
     {
         public int id { get; set; }
         public string Exercise { get; set; }
