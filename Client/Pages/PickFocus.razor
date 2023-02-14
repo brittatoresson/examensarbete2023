@@ -1,20 +1,28 @@
 ﻿@page "/focus"
 @using MudBlazor
+@using Examensarbete.Client.Components
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
-@using Newtonsoft.Json;
 
-@foreach (var item in focus)
-{
-    <p @onclick="(() => SetFocus(item))">@item.Name</p>
-}
+<MudPaper Class="focus" Elevation="0">
 
-<p @onclick="GetSessionState">Get session</p>
+    @foreach (var item in focus)
+    {
+
+            <MudCard Class="focusCard" @onclick="(() => SetFocus(item))">@item.Name</MudCard>
+    }
+
+    @if (hasFocusArea)
+    {
+        <NavigationButton Url="timer" />
+    }
+</MudPaper>
 
 @code {
     public class Focus
     {
         public string Name;
     }
+    public bool hasFocusArea;
 
     List<Focus> focus = new();
 
@@ -28,10 +36,10 @@
         focus.Add(new Focus { Name = "Uthållighet" });
     }
 
-
     public async Task SetFocus(Focus focus)
     {
         await sessionStorage.SetItemAsync("Focus", focus.Name);
+        hasFocusArea = true;
 
     }
     public async Task GetSessionState()
