@@ -42,8 +42,6 @@ namespace Examensarbete.Client.Services.ExerciseService
             ExerciseList = result;
         }
 
-        WorkoutModel workout = new();
-
         public async Task CreateWorkout(List<ExerciseModel> exercise)
         {
             var result = await _http.PostAsJsonAsync("api/test", exercise);
@@ -51,18 +49,11 @@ namespace Examensarbete.Client.Services.ExerciseService
             Exercise = response;
         }
 
+        //WorkoutModel workout = new();
         public async Task CreateWorkout(ExerciseModel exercise)
         {
-            //workout.Date = DateTime.Now;
-            //workout.Exercise = " ny övningar";
-            //workout.ID = 12;
-            //workout.Repetitions = 32;
-            //workout.Rounds = 3;
-            //workout.TotalTime = 12;
-
-            var result = await _http.PostAsJsonAsync("api/test", workout);
-            var content = await result.Content.ReadFromJsonAsync<ExerciseModel>();
-
+            //var result = await _http.PostAsJsonAsync("api/test", workout);
+            //var content = await result.Content.ReadFromJsonAsync<ExerciseModel>();
             //Exercise = response;
         }
     }

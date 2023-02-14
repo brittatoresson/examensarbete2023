@@ -1,36 +1,67 @@
 ﻿@page "/timer"
 @using Examensarbete.Client.Components
+@using Examensarbete.Shared.Model;
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject HttpClient Http
+@using Newtonsoft.Json;
 
 <MudGrid>
     <MudItem sx="6" sm="6">
         <MudPaper Class="pa-8">
-            <MudText>@TimeLeft</MudText>
-            <Timer @bind-Minutes="@min" Disable="startBtn" />
-
-            @if (!startBtn)
+            @if (!SetMinutes)
             {
-                <MudButton @onclick="StartTimer" Color="Color.Primary" Disabled="@(min > 0 ? false: true)">Go!</MudButton>
+                <Slider @bind-Minutes="@min" Disable="startBtn" />
+                <MudButton @onclick="(() => SetMinutes = true)" Disabled="@(min > 0 ? false: true)">Next</MudButton>
+
             }
             else
             {
-                <MudButton @onclick="PauseTimer"> @(pause ? "resume" : "pause")</MudButton>
-                <MudButton @onclick="StopTimer"> Stop</MudButton>
+                @if (!startBtn)
+                {
+                    <MudText>@min min </MudText>
+                    <MudButton @onclick="StartTimer" Color="Color.Primary" Disabled="@(min > 0 ? false: true)">Go!</MudButton>
+                }
+                else
+                {
+                    <MudText>@TimeLeft</MudText>
+
+                    <MudButton @onclick="PauseTimer"> @(pause ? "resume" : "pause")</MudButton>
+                    <MudButton @onclick="StopTimer"> Stop</MudButton>
+                }
             }
 
         </MudPaper>
     </MudItem>
 </MudGrid>
 
+
+<MudButton @onclick="GetSessionState"> Save workout</MudButton>
+@if (!String.IsNullOrEmpty(getWorkout.Exercise))
+{
+    <p>@getWorkout.Exercise</p>
+    <p>@getWorkout.id</p>
+    <p>@getWorkout.Focus</p>
+    <p>@getWorkout.Repetition reps</p>
+    <p>@getWorkout.Date</p>
+    <p>Total time: @getWorkout.TotalTime min </p>
+}
+
 @code {
     public int min;
     public TimeSpan TimeLeft;
+    public TimeSpan StartTime;
     public bool pause;
     public bool startBtn;
+    public bool SetMinutes;
+
+    NyWorkoutModel getWorkout = new();
 
     public async Task StartTimer()
     {
         startBtn = true;
         TimeLeft = new TimeSpan(0, min, 0);
+        StartTime = TimeLeft;
+        StateHasChanged();
 
         while (TimeLeft > new TimeSpan() && pause == false)
         {
@@ -55,14 +86,32 @@
         {
             await Task.Delay(1000);
             TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
+            if (TimeLeft == new TimeSpan(0, 0, 1))
+            {
+                GetSessionState();
+            }
             StateHasChanged();
         }
     }
+
     public void StopTimer()
     {
         startBtn = false;
+        SetMinutes = false;
+        pause = false;
         TimeLeft = new TimeSpan(0, 0, 1);
         min = 0;
         StateHasChanged();
+    }
+
+    public async Task GetSessionState()
+    {
+        var focus = await sessionStorage.GetItemAsync<string>("Focus");
+        var workout = await sessionStorage.GetItemAsync<string>("Workout");
+        getWorkout = JsonConvert.DeserializeObject<NyWorkoutModel>(workout);
+        getWorkout.TotalTime = StartTime.Minutes;
+        getWorkout.Focus = focus;
+        getWorkout.Date = DateTime.Now;
+        await Http.PostAsJsonAsync("api/Ny", getWorkout);
     }
 }

@@ -10,13 +10,11 @@
     //Two-way binidng behövs för att uppdatera kompoentet/värder i parentkomponenter https://blazor-university.com/components/two-way-binding/
     [Parameter]
     public EventCallback<int> MinutesChanged { get; set; }
-    //public EventCallback<bool> DisableChanged { get; set; }
 
 
     async Task UpdateMinutesValue()
     {
         await MinutesChanged.InvokeAsync(Minutes);
-        //await DisableChanged.InvokeAsync(Disable);
         StateHasChanged();
     }
 }

@@ -100,8 +100,7 @@ a, .btn-link {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 
-/*//EGET
-*/
+/*EGET*/
 
 .mud-button {
     background: lightblue !important;

@@ -1,10 +1,9 @@
 ﻿@page "/exercise"
-@inject ExerciseService exerciseService;
-@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
-@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 @using Examensarbete.Shared.Model;
 @using Examensarbete.Client.Components;
 @using Newtonsoft.Json;
+@inject ExerciseService exerciseService;
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject HttpClient Http
 
 <MudGrid>
@@ -59,14 +58,13 @@
         var repetitions = RandomRepetitions();
         var randomExercise = RandomExercise();
 
-        Ny workout = new();
+        NyWorkoutModel workout = new();
 
         workout.Exercise = randomExercise.Name;
-        //workout.Type = randomExercise.Type;
-        workout.TotalTime = 30;
         workout.Repetition = repetitions;
+        await sessionStorage.SetItemAsync("Workout", workout);
 
-        await Http.PostAsJsonAsync("api/Ny", workout);
+        //await Http.PostAsJsonAsync("api/Ny", workout);
     }
 
     public ExerciseModel RandomExercise()
@@ -83,11 +81,4 @@
         return randomRepetitions;
     }
 
-    ////flytta till constant?
-    public void Navigate(string url)
-    {
-        NavigationManger.NavigateTo(url);
-    }
-
 }
-
