@@ -4,8 +4,8 @@
 <MudGrid>
     <MudItem sx="6" sm="6">
         <MudPaper Class="pa-8">
-            <MudText>@timeLeft</MudText>
-            <Timer @bind-Minutes="@min" />
+            <MudText>@TimeLeft</MudText>
+            <Timer @bind-Minutes="@min" Disable="startBtn" />
 
             @if (!startBtn)
             {
@@ -23,21 +23,19 @@
 
 @code {
     public int min;
-    public TimeSpan timeLeft;
-    TimeSpan TimeLeft;
+    public TimeSpan TimeLeft;
     public bool pause;
     public bool startBtn;
 
     public async Task StartTimer()
     {
         startBtn = true;
-        TimeLeft = new TimeSpan(0, min, 3);
+        TimeLeft = new TimeSpan(0, min, 0);
 
         while (TimeLeft > new TimeSpan() && pause == false)
         {
             await Task.Delay(1000);
             TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
-            timeLeft = TimeLeft;
             StateHasChanged();
         }
     }
@@ -57,7 +55,6 @@
         {
             await Task.Delay(1000);
             TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
-            timeLeft = TimeLeft;
             StateHasChanged();
         }
     }

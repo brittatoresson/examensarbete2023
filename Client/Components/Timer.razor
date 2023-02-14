@@ -1,5 +1,5 @@
 ﻿
-<MudSlider @bind-Value="@Minutes" Max="120" @onclick="UpdateMinutesValue">Välj antal minuter: @Minutes min</MudSlider>
+<MudSlider @bind-Value="@Minutes" Max="120" @onclick="UpdateMinutesValue" Disabled="@Disable">Välj antal minuter: @Minutes min</MudSlider>
 
 @code {
     [Parameter]
@@ -10,11 +10,13 @@
     //Two-way binidng behövs för att uppdatera kompoentet/värder i parentkomponenter https://blazor-university.com/components/two-way-binding/
     [Parameter]
     public EventCallback<int> MinutesChanged { get; set; }
+    //public EventCallback<bool> DisableChanged { get; set; }
+
 
     async Task UpdateMinutesValue()
     {
         await MinutesChanged.InvokeAsync(Minutes);
+        //await DisableChanged.InvokeAsync(Disable);
+        StateHasChanged();
     }
-     
-
 }
