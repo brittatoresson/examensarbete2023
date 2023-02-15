@@ -1,0 +1,43 @@
+﻿@using Examensarbete.Shared.Model;
+@using Newtonsoft.Json;
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
+@inject HttpClient Http
+
+<MudPaper Class="focus" Elevation="0">
+    @if (!String.IsNullOrEmpty(newWorkout.Exercise))
+    {
+        <p>@newWorkout.Exercise</p>
+        <p>@newWorkout.id</p>
+        <p>@newWorkout.Focus</p>
+        <p>@newWorkout.Repetition reps</p>
+        <p>@newWorkout.Date</p>
+        <p>Total time: @newWorkout.TotalTime min </p>
+    }
+    <MudButton @onclick="SaveTodDb"> Save workout</MudButton>
+
+</MudPaper>
+
+@code {
+    NyWorkoutModel newWorkout = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        var focus = await sessionStorage.GetItemAsync<string>("Focus");
+        var workout = await sessionStorage.GetItemAsync<string>("Workout");
+        var time = await sessionStorage.GetItemAsync<int>("Time");
+        newWorkout = JsonConvert.DeserializeObject<NyWorkoutModel>(workout);
+        newWorkout.TotalTime = time;
+        newWorkout.Focus = focus;
+        newWorkout.Date = DateTime.Now;
+
+    }
+
+    public async Task SaveTodDb()
+    {
+        await Http.PostAsJsonAsync("api/Ny", newWorkout);
+        NavigationManger.NavigateTo("/");
+    }
+
+}

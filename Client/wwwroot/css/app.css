@@ -105,14 +105,18 @@ a, .btn-link {
 .mud-button {
     background: lightblue !important;
 }
+
 /* Pick exercise*/
+.pickExercise {
+    margin:5rem;
+}
 .mud-card {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 20vw;
-    height: 20vw;
-    background: lightgrey !important
+    width: 15vw;
+    height: 15vw;
+    background: lightgrey !important;
 }
 
 .activeExercise {
@@ -124,7 +128,7 @@ a, .btn-link {
 }
 
 
-/*    Focus*/
+/*Focus*/
 .focus {
     display: flex;
     flex-direction: column;

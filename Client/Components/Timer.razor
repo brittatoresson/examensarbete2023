@@ -1,9 +1,6 @@
-﻿@page "/timer"
+﻿@*@page "/timer"*@
 @using Examensarbete.Client.Components
-@using Examensarbete.Shared.Model;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
-@inject HttpClient Http
-@using Newtonsoft.Json;
 
 <MudGrid>
     <MudItem sx="6" sm="6">
@@ -12,7 +9,6 @@
             {
                 <Slider @bind-Minutes="@min" Disable="startBtn" />
                 <MudButton @onclick="(() => SetMinutes = true)" Disabled="@(min > 0 ? false: true)">Next</MudButton>
-
             }
             else
             {
@@ -34,27 +30,26 @@
     </MudItem>
 </MudGrid>
 
-
-<MudButton @onclick="GetSessionState"> Save workout</MudButton>
-@if (!String.IsNullOrEmpty(getWorkout.Exercise))
-{
-    <p>@getWorkout.Exercise</p>
-    <p>@getWorkout.id</p>
-    <p>@getWorkout.Focus</p>
-    <p>@getWorkout.Repetition reps</p>
-    <p>@getWorkout.Date</p>
-    <p>Total time: @getWorkout.TotalTime min </p>
-}
-
 @code {
     public int min;
     public TimeSpan TimeLeft;
-    public TimeSpan StartTime;
+    public TimeSpan StartTime = new TimeSpan(0, 7, 1);
     public bool pause;
     public bool startBtn;
     public bool SetMinutes;
 
-    NyWorkoutModel getWorkout = new();
+    [Parameter]
+    public bool Finish { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<bool> FinishChanged { get; set; }
+
+
+    async Task UpdateFinishValue()
+    {
+        await FinishChanged.InvokeAsync(Finish);
+        StateHasChanged();
+    }
 
     public async Task StartTimer()
     {
@@ -88,7 +83,8 @@
             TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
             if (TimeLeft == new TimeSpan(0, 0, 1))
             {
-                GetSessionState();
+                await sessionStorage.SetItemAsync<int>("Time", StartTime.Minutes);
+                Finish = true;
             }
             StateHasChanged();
         }
@@ -102,16 +98,5 @@
         TimeLeft = new TimeSpan(0, 0, 1);
         min = 0;
         StateHasChanged();
-    }
-
-    public async Task GetSessionState()
-    {
-        var focus = await sessionStorage.GetItemAsync<string>("Focus");
-        var workout = await sessionStorage.GetItemAsync<string>("Workout");
-        getWorkout = JsonConvert.DeserializeObject<NyWorkoutModel>(workout);
-        getWorkout.TotalTime = StartTime.Minutes;
-        getWorkout.Focus = focus;
-        getWorkout.Date = DateTime.Now;
-        await Http.PostAsJsonAsync("api/Ny", getWorkout);
     }
 }

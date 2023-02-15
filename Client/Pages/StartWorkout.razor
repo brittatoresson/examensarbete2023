@@ -1,0 +1,17 @@
+﻿@page "/timer"
+@using Examensarbete.Client.Components
+
+@if (Finish)
+{
+    <WorkoutSummery />
+}
+else
+{
+    <Timer @bind-Finish="Finish"></Timer>
+}
+
+
+@code {
+
+    public bool Finish = true;
+}

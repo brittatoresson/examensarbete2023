@@ -1,5 +1,7 @@
-﻿
-<MudSlider @bind-Value="@Minutes" Max="120" @onclick="UpdateMinutesValue" Disabled="@Disable">Välj antal minuter: @Minutes min</MudSlider>
+﻿@*<MudPaper Class="focus" Elevation="0">*@
+
+    <MudSlider @bind-Value="@Minutes" Max="120" @onclick="UpdateMinutesValue" Disabled="@Disable">Välj antal minuter: @Minutes min</MudSlider>
+@*</MudPaper>*@
 
 @code {
     [Parameter]
