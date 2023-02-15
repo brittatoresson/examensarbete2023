@@ -1,10 +1,7 @@
-﻿@*@page "/timer"*@
-@using Examensarbete.Client.Components
+﻿@using Examensarbete.Client.Components
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
-<MudGrid>
-    <MudItem sx="6" sm="6">
-        <MudPaper Class="pa-8">
+        <MudPaper Class="pa-8" Elevation="0">
             @if (!SetMinutes)
             {
                 <Slider @bind-Minutes="@min" Disable="startBtn" />
@@ -14,26 +11,25 @@
             {
                 @if (!startBtn)
                 {
-                    <MudText>@min min </MudText>
+                    <WorkoutSummery></WorkoutSummery>
                     <MudButton @onclick="StartTimer" Color="Color.Primary" Disabled="@(min > 0 ? false: true)">Go!</MudButton>
                 }
                 else
                 {
                     <MudText>@TimeLeft</MudText>
-
+                    <div class="timerBtnContainer">
                     <MudButton @onclick="PauseTimer"> @(pause ? "resume" : "pause")</MudButton>
                     <MudButton @onclick="StopTimer"> Stop</MudButton>
+                    </div>
                 }
             }
 
         </MudPaper>
-    </MudItem>
-</MudGrid>
-
+  
 @code {
     public int min;
     public TimeSpan TimeLeft;
-    public TimeSpan StartTime = new TimeSpan(0, 7, 1);
+    public TimeSpan StartTime;
     public bool pause;
     public bool startBtn;
     public bool SetMinutes;
@@ -43,7 +39,6 @@
 
     [Parameter]
     public EventCallback<bool> FinishChanged { get; set; }
-
 
     async Task UpdateFinishValue()
     {
@@ -83,7 +78,6 @@
             TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
             if (TimeLeft == new TimeSpan(0, 0, 1))
             {
-                await sessionStorage.SetItemAsync<int>("Time", StartTime.Minutes);
                 Finish = true;
             }
             StateHasChanged();

@@ -3,7 +3,7 @@
 @using Examensarbete.Client.Components
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
-<MudPaper Class="focus" Elevation="0">
+<MudPaper Class="positionCenter" Elevation="0">
 
     @foreach (var item in focus)
     {
@@ -41,10 +41,5 @@
         await sessionStorage.SetItemAsync("Focus", focus.Name);
         hasFocusArea = true;
 
-    }
-    public async Task GetSessionState()
-    {
-        var name = await sessionStorage.GetItemAsync<string>("Focus");
-        //Focus myCustomObject = JsonConvert.DeserializeObject<Focus>(name);
     }
 }

@@ -1,17 +1,32 @@
 ﻿@page "/timer"
 @using Examensarbete.Client.Components
+@using Examensarbete.Shared.Model;
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject HttpClient Http
 
-@if (Finish)
-{
-    <WorkoutSummery />
-}
-else
-{
-    <Timer @bind-Finish="Finish"></Timer>
-}
+    <MudPaper Class="startWorkoutContainer">
 
+        @if (Finish)
+        {
+            <WorkoutSummery />
+            <MudButton @onclick="SaveTodDb"> Save workout</MudButton>
+        }
+        else
+        {
+            <Timer @bind-Finish="Finish"></Timer>
+            <MudButton @onclick="(() => Finish = true)"> Finish Workout (test)</MudButton>
+        }
+        </MudPaper>
 
-@code {
+        @code {
+            public bool Finish;
+            NyWorkoutModel? newWorkout = new();
 
-    public bool Finish = true;
-}
+            public async Task SaveTodDb()
+            {
+                var workout = sessionStorage.GetItemAsync<NyWorkoutModel>("Workout");
+                await Http.PostAsJsonAsync("api/Ny", workout);
+                NavigationManger.NavigateTo("/");
+            }
+        }

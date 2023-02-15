@@ -1,7 +1,6 @@
-﻿@*<MudPaper Class="focus" Elevation="0">*@
+﻿@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
-    <MudSlider @bind-Value="@Minutes" Max="120" @onclick="UpdateMinutesValue" Disabled="@Disable">Välj antal minuter: @Minutes min</MudSlider>
-@*</MudPaper>*@
+<MudSlider @bind-Value="@Minutes" Max="120" @onclick="UpdateMinutesValue" Disabled="@Disable">Välj antal minuter: @Minutes min</MudSlider>
 
 @code {
     [Parameter]
@@ -13,10 +12,11 @@
     [Parameter]
     public EventCallback<int> MinutesChanged { get; set; }
 
-
     async Task UpdateMinutesValue()
     {
         await MinutesChanged.InvokeAsync(Minutes);
+        await sessionStorage.SetItemAsync<int>("Time", Minutes);
+
         StateHasChanged();
     }
 }

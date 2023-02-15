@@ -1,11 +1,9 @@
 ﻿@page "/exercise"
 @using Examensarbete.Shared.Model;
 @using Examensarbete.Client.Components;
-@using Examensarbete.Client.Services.ExerciseService;
-@using Newtonsoft.Json;
 @inject ExerciseService exerciseService;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
-@inject HttpClient Http
+
 <MudPaper Class="pickExercise" Elevation="0">
 
     <MudGrid>
@@ -22,74 +20,55 @@
                     <MudCard Class="@(item.isActive ? "" :"activeExercise")"
                              @onclick="(() => PickExercise(item))">@item.Name</MudCard>
                         </MudItem>
-                    }
+             }
         }
     </MudGrid>
+    @if (pickExercise.Count > 0)
+    {
 
-    <button @onclick="GetSessionState">Session</button>
-
-    <MudButton @onclick="SaveExercises">Go!</MudButton>
-    <NavigationButton Url="focus" />
-
-    <MudButton @onclick="(()=>RandomRepetitions())"> randomreps</MudButton>
-    </MudPaper>
-
-    @code {
-        ExerciseModel test = new();
-        List<ExerciseModel> pickExercise = new();
-        ExerciseModel NY = new();
-
-        protected override async Task OnInitializedAsync()
-        {
-            await exerciseService.GetExercises();
-            //test = await exerciseService.GetSingelEx(1);
-
-        }
-        public async Task PickExercise(ExerciseModel exercise)
-        {
-            exercise.isActive = true;
-            pickExercise.Add(exercise);
-            //await exerciseService.CreateWorkout(exercise);
-        }
-
-        public async Task SaveExercises()
-        {
-            await sessionStorage.SetItemAsync("Exercise", pickExercise);
-
-        }
-
-        List<ExerciseModel> myCustomObject;
-
-        public async Task GetSessionState()
-        {
-            var name = await sessionStorage.GetItemAsync<string>("Exercise");
-
-            myCustomObject = JsonConvert.DeserializeObject<List<ExerciseModel>>(name);
-            //GET RANDOM LIST OF EXERCISE
-            var repetitions = RandomRepetitions();
-            var randomExercise = RandomExercise();
-
-            NyWorkoutModel workout = new();
-
-            workout.Exercise = randomExercise.Name;
-            workout.Repetition = repetitions;
-            await sessionStorage.SetItemAsync("Workout", workout);
-
-            //await Http.PostAsJsonAsync("api/Ny", workout);
-        }
-
-        public ExerciseModel RandomExercise()
-        {
-            Random random = new();
-            var randomInt = random.Next(myCustomObject.Count);
-            ExerciseModel randomExercise = myCustomObject[randomInt];
-            return randomExercise;
-        }
-        public int RandomRepetitions()
-        {
-            Random random = new();
-            var randomRepetitions = random.Next(100);
-            return randomRepetitions;
-        }
-
+        <MudButton @onclick="SaveExercises">Save</MudButton>
+        <NavigationButton Url="focus" />
     }
+
+</MudPaper>
+
+@code {
+    List<ExerciseModel> pickExercise = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await exerciseService.GetExercises();
+    }
+
+    public async Task PickExercise(ExerciseModel exercise)
+    {
+        exercise.isActive = true;
+        pickExercise.Add(exercise);
+    }
+
+    public async Task SaveExercises()
+    {
+        NyWorkoutModel workout = new();
+
+        var repetitions = RandomRepetitions();
+        var randomExercise = RandomExercise();
+
+        workout.Exercise = randomExercise.Name;
+        workout.Repetition = repetitions;
+        await sessionStorage.SetItemAsync("Workout", workout);
+    }
+
+    public ExerciseModel RandomExercise()
+    {
+        Random random = new();
+        var randomInt = random.Next(pickExercise.Count);
+        ExerciseModel randomExercise = pickExercise[randomInt];
+        return randomExercise;
+    }
+    public int RandomRepetitions()
+    {
+        Random random = new();
+        var randomRepetitions = random.Next(100);
+        return randomRepetitions;
+    }
+}

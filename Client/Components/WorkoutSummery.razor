@@ -4,22 +4,22 @@
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 @inject HttpClient Http
 
-<MudPaper Class="focus" Elevation="0">
+<MudPaper Class="positionCenter" Elevation="0">
     @if (!String.IsNullOrEmpty(newWorkout.Exercise))
     {
-        <p>@newWorkout.Exercise</p>
-        <p>@newWorkout.id</p>
-        <p>@newWorkout.Focus</p>
-        <p>@newWorkout.Repetition reps</p>
-        <p>@newWorkout.Date</p>
-        <p>Total time: @newWorkout.TotalTime min </p>
+        <MudText>Sammanfattning</MudText>
+        <ul>
+            <li>@newWorkout.Exercise</li>
+            <li>Type: @newWorkout.Focus</li>
+            <li>Repetitions: @newWorkout.Repetition </li>
+            <li>Total time: @newWorkout.TotalTime min</li>
+        </ul>
     }
-    <MudButton @onclick="SaveTodDb"> Save workout</MudButton>
 
 </MudPaper>
 
 @code {
-    NyWorkoutModel newWorkout = new();
+    NyWorkoutModel? newWorkout = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -32,12 +32,6 @@
         newWorkout.Focus = focus;
         newWorkout.Date = DateTime.Now;
 
+        await sessionStorage.SetItemAsync<NyWorkoutModel>("Workout", newWorkout);
     }
-
-    public async Task SaveTodDb()
-    {
-        await Http.PostAsJsonAsync("api/Ny", newWorkout);
-        NavigationManger.NavigateTo("/");
-    }
-
 }

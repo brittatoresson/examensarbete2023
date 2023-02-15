@@ -101,6 +101,12 @@ a, .btn-link {
     }
 
 /*EGET*/
+article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .mud-button {
     background: lightblue !important;
@@ -108,8 +114,9 @@ a, .btn-link {
 
 /* Pick exercise*/
 .pickExercise {
-    margin:5rem;
+    margin: 5rem;
 }
+
 .mud-card {
     display: flex;
     justify-content: center;
@@ -117,25 +124,56 @@ a, .btn-link {
     width: 15vw;
     height: 15vw;
     background: lightgrey !important;
+    cursor: pointer;
 }
 
 .activeExercise {
     background: white !important;
 }
 
-.activeExercise:hover {
-   background: grey !important;
-}
+    .activeExercise:hover {
+        background: grey !important;
+    }
 
 
 /*Focus*/
-.focus {
+.positionCenter {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .focusCard {
     width: 20vw;
     height: 10vw;
     margin: 1rem;
+    cursor: pointer;
+}
+
+
+/*Timer*/
+.startWorkoutContainer {
+    min-width: 50vw;
+    min-height: 30vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.startWorkoutContainer button {
+ margin: 5px;
+}
+
+.timerBtnContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+
+@media screen and (max-width: 500px) {
+    .startWorkoutContainer {
+        min-width: 70vw;
+        min-height: 100vw;
+    }
 }
