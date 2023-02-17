@@ -14,8 +14,9 @@ namespace Examensarbete.Server.Services
         {
             _dbContext = dbContext;
         }
+
         //To Get all user details
-        public List<NyWorkoutModel> GetUserDetails()
+        public List<NyWorkoutModel> GetSavedWorkouts()
         {
             try
             {
@@ -26,6 +27,8 @@ namespace Examensarbete.Server.Services
                 throw;
             }
         }
+
+    
         //To Add new user record
         public void AddUser(NyWorkoutModel user)
         {

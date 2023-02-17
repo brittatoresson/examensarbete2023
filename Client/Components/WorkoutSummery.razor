@@ -17,6 +17,8 @@
     }
 
 </MudPaper>
+<MudButton @onclick="SaveTodDb"> Save workout TEST</MudButton>
+
 
 @code {
     NyWorkoutModel? newWorkout = new();
@@ -33,5 +35,13 @@
         newWorkout.Date = DateTime.Now;
 
         await sessionStorage.SetItemAsync<NyWorkoutModel>("Workout", newWorkout);
+    }
+
+
+    public async Task SaveTodDb()
+    {
+
+    await Http.PostAsJsonAsync("api/Ny", newWorkout);
+        NavigationManger.NavigateTo("/");
     }
 }

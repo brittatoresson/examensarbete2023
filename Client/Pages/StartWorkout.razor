@@ -4,6 +4,7 @@
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject HttpClient Http
+@using Newtonsoft.Json;
 
     <MudPaper Class="startWorkoutContainer">
 
@@ -25,7 +26,10 @@
 
             public async Task SaveTodDb()
             {
+                //FUNGERAR EJ, WHYY?
+                var workouts = sessionStorage.GetItemAsync<string>("Workout");
                 var workout = sessionStorage.GetItemAsync<NyWorkoutModel>("Workout");
+
                 await Http.PostAsJsonAsync("api/Ny", workout);
                 NavigationManger.NavigateTo("/");
             }

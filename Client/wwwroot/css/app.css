@@ -137,11 +137,11 @@ article {
 
 
 /*Focus*/
-.positionCenter {
+/*.positionCenter {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+}*/
 
 .focusCard {
     width: 20vw;
@@ -161,14 +161,25 @@ article {
     justify-content: center;
 }
 
-.startWorkoutContainer button {
- margin: 5px;
-}
+    .startWorkoutContainer button {
+        margin: 5px;
+    }
 
 .timerBtnContainer {
     display: flex;
     flex-direction: row;
 }
+
+/*saved workouts*/
+.savedWorkouts {
+    height: 100vh;
+    overflow: scroll;
+    min-width: 50vw;
+}
+
+    .savedWorkouts > ul {
+    margin: 5rem;
+    }
 
 
 @media screen and (max-width: 500px) {

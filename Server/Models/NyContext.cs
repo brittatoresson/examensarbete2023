@@ -14,6 +14,7 @@ namespace Examensarbete.Server.Models
         {
         }
         public virtual DbSet<NyWorkoutModel> Ny { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<NyWorkoutModel>(entity =>

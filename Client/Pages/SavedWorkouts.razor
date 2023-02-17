@@ -1,0 +1,42 @@
+﻿@page "/saved-workout"
+@inject HttpClient Http
+@using Examensarbete.Shared.Model;
+@using Newtonsoft.Json;
+@inject ExerciseService exerciseService;
+
+<MudPaper Class="savedWorkouts">
+    @foreach (var date in exerciseService.workoutList)
+    {
+
+        <ul>
+            <li><h3>@date.Exercise</h3></li>
+            <li>@date.Focus</li>
+            <li>@date.Repetition reps</li>
+            <li>@date.Rounds rounds</li>
+            <li>Total time: @date.TotalTime min</li>
+            <li>@date.Date.Value.Date.ToShortDateString()</li>
+        </ul>
+        <MudScrollToTop>
+            <MudFab Color="Color.Tertiary" Icon="@Icons.Material.Filled.ArrowCircleUp" />
+        </MudScrollToTop>
+
+    }
+</MudPaper>
+
+@code {
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        base.OnInitializedAsync();
+
+        //var hej = await Http.GetFromJsonAsync<NyWorkoutModel>("api/Ny");
+        await exerciseService.Test();
+
+        return;
+
+    }
+
+}
+
