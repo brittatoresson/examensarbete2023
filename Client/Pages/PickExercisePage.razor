@@ -20,13 +20,13 @@
                     <MudCard Class="@(item.isActive ? "" :"activeExercise")"
                              @onclick="(() => PickExercise(item))">@item.Name</MudCard>
                         </MudItem>
-             }
+                    }
         }
     </MudGrid>
     @if (pickExercise.Count > 0)
     {
 
-        <MudButton @onclick="SaveExercises">Save</MudButton>
+        @*<MudButton @onclick="SaveExercises">Save</MudButton>*@
         <NavigationButton Url="focus" />
     }
 
@@ -34,6 +34,7 @@
 
 @code {
     List<ExerciseModel> pickExercise = new();
+    CreateWorkout createWorkout = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,31 +45,14 @@
     {
         exercise.isActive = true;
         pickExercise.Add(exercise);
+        SaveExercise();
     }
 
-    public async Task SaveExercises()
+    public async Task SaveExercise()
     {
-        NyWorkoutModel workout = new();
-
-        var repetitions = RandomRepetitions();
-        var randomExercise = RandomExercise();
-
+        WorkoutModel workout = new();
+        var randomExercise = createWorkout.RandomExercise(pickExercise);
         workout.Exercise = randomExercise.Name;
-        workout.Repetition = repetitions;
         await sessionStorage.SetItemAsync("Workout", workout);
-    }
-
-    public ExerciseModel RandomExercise()
-    {
-        Random random = new();
-        var randomInt = random.Next(pickExercise.Count);
-        ExerciseModel randomExercise = pickExercise[randomInt];
-        return randomExercise;
-    }
-    public int RandomRepetitions()
-    {
-        Random random = new();
-        var randomRepetitions = random.Next(100);
-        return randomRepetitions;
     }
 }

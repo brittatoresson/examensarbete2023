@@ -19,7 +19,7 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(build
 builder.Services.AddDbContext<DatabaseContextNy>
 (options =>
 options.UseSqlServer(builder.Configuration["ConnectionString:DefaultConnection"]));
-builder.Services.AddTransient<INy, NyManager>();
+builder.Services.AddTransient<INyManager, NyManager>();
 
 var app = builder.Build();
 

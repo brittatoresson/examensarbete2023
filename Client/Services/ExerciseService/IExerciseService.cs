@@ -3,14 +3,11 @@ using Examensarbete.Shared.Model;
 
 namespace Examensarbete.Client.Services.ExerciseService
 {
-	public interface IExerciseService
-	{
-		List <ExerciseModel> ExerciseList { get; set; }
-		Task GetExercises();
-		Task<ExerciseModel> GetSingelEx(int id);
-		Task CreateWorkout(ExerciseModel exercise);
-		Task CreateWorkout(List<ExerciseModel> exercise);
-
-
+    public interface IExerciseService
+    {
+        List<ExerciseModel> ExerciseList { get; set; }
+        Task GetExercises();
+        Task<ExerciseModel> GetSingelEx(int id);
+        Task CreateWorkout(List<ExerciseModel> exercise);
     }
 }

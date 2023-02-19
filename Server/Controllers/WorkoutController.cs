@@ -2,10 +2,8 @@
 using Examensarbete.Server.Interface;
 using Examensarbete.Shared.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Examensarbete.Server.Models;
-
 
 // FKYTTA IN ALL DATA FRÅN NyManager HIT?? Gör databas-call här...?
 namespace Examensarbete.Server.Controllers
@@ -14,14 +12,14 @@ namespace Examensarbete.Server.Controllers
     [ApiController]
     public class NyController : ControllerBase
     {
-        private readonly INy _INy;
-        public NyController(INy iNy)
+        private readonly INyManager _INy;
+        public NyController(INyManager iNy)
         {
             _INy = iNy;
         }
 
         [HttpGet]
-        public async Task<List<NyWorkoutModel>> Get()
+        public async Task<List<WorkoutModel>> Get()
         {
             var hej = await Task.FromResult(_INy.GetSavedWorkouts());
             return hej;
@@ -30,7 +28,7 @@ namespace Examensarbete.Server.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            NyWorkoutModel ny = _INy.GetUserData(id);
+            WorkoutModel ny = _INy.GetUserData(id);
             if (ny != null)
             {
                 return Ok(ny);
@@ -38,20 +36,21 @@ namespace Examensarbete.Server.Controllers
             return NotFound();
         }
         [HttpPost]
-        public void Post(NyWorkoutModel ny)
+        public void Post(WorkoutModel ny)
         {
-            _INy.AddUser(ny);
+            _INy.AddWorkout(ny);
         }
-        [HttpPut]
-        public void Put(NyWorkoutModel ny)
-        {
-            _INy.UpdateUserDetails(ny);
-        }
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            _INy.DeleteUser(id);
-            return Ok();
-        }
+
+        //[HttpPut]
+        //public void Put(WorkoutModel ny)
+        //{
+        //    _INy.UpdateUserDetails(ny);
+        //}
+        //[HttpDelete("{id}")]
+        //public IActionResult Delete(int id)
+        //{
+        //    _INy.DeleteUser(id);
+        //    return Ok();
+        //}
     }
 }

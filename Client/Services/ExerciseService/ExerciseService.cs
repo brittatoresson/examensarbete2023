@@ -1,18 +1,10 @@
-﻿using System;
+﻿//using System;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Net.NetworkInformation;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Xml.Linq;
-using Examensarbete.Shared;
 using Examensarbete.Shared.Model;
-using Microsoft.AspNetCore.Components;
-using Newtonsoft.Json;
-using static System.Net.WebRequestMethods;
-using static Examensarbete.Client.Pages.PickExercisePage;
+//using Microsoft.AspNetCore.Components;
+//using Newtonsoft.Json;
+//using static Examensarbete.Client.Pages.PickExercisePage;
 
 namespace Examensarbete.Client.Services.ExerciseService
 {
@@ -25,7 +17,7 @@ namespace Examensarbete.Client.Services.ExerciseService
             _http = http;
         }
 
-        public List<NyWorkoutModel>? workoutList { get; set; } = new();
+        public List<WorkoutModel>? WorkoutList { get; set; } = new();
         public List<ExerciseModel>? ExerciseList { get; set; } = new();
         public ExerciseModel? Exercise { get; set; } = new();
 
@@ -43,10 +35,10 @@ namespace Examensarbete.Client.Services.ExerciseService
             ExerciseList = result;
         }
 
-            public async Task Test()
+            public async Task GetWorkout()
         {
-            var result = await _http.GetFromJsonAsync<List<NyWorkoutModel>>("api/Ny");
-            workoutList = result;
+            var result = await _http.GetFromJsonAsync<List<WorkoutModel>>("api/Ny");
+            WorkoutList = result;
         }
 
         public async Task CreateWorkout(List<ExerciseModel> exercise)
@@ -54,14 +46,6 @@ namespace Examensarbete.Client.Services.ExerciseService
             var result = await _http.PostAsJsonAsync("api/test", exercise);
             var response = await result.Content.ReadFromJsonAsync<ExerciseModel>();
             Exercise = response;
-        }
-
-        //WorkoutModel workout = new();
-        public async Task CreateWorkout(ExerciseModel exercise)
-        {
-            //var result = await _http.PostAsJsonAsync("api/test", workout);
-            //var content = await result.Content.ReadFromJsonAsync<ExerciseModel>();
-            //Exercise = response;
         }
     }
 }

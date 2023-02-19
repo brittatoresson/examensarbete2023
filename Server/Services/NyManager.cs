@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Examensarbete.Server.Services
 {
 
-    public class NyManager : INy
+    public class NyManager : INyManager
     {
         readonly DatabaseContextNy _dbContext = new();
         public NyManager(DatabaseContextNy dbContext)
@@ -16,7 +16,7 @@ namespace Examensarbete.Server.Services
         }
 
         //To Get all user details
-        public List<NyWorkoutModel> GetSavedWorkouts()
+        public List<WorkoutModel> GetSavedWorkouts()
         {
             try
             {
@@ -30,7 +30,7 @@ namespace Examensarbete.Server.Services
 
     
         //To Add new user record
-        public void AddUser(NyWorkoutModel user)
+        public void AddWorkout(WorkoutModel user)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Examensarbete.Server.Services
             }
         }
         //To Update the records of a particluar user
-        public void UpdateUserDetails(NyWorkoutModel user)
+        public void UpdateUserDetails(WorkoutModel user)
         {
             try
             {
@@ -56,11 +56,11 @@ namespace Examensarbete.Server.Services
             }
         }
         //Get the details of a particular user
-        public NyWorkoutModel GetUserData(int id)
+        public WorkoutModel GetUserData(int id)
         {
             try
             {
-                NyWorkoutModel? user = _dbContext.Ny.Find(id);
+                WorkoutModel? user = _dbContext.Ny.Find(id);
                 if (user != null)
                 {
                     return user;
@@ -80,7 +80,7 @@ namespace Examensarbete.Server.Services
         {
             try
             {
-                NyWorkoutModel? user = _dbContext.Ny.Find(id);
+                WorkoutModel? user = _dbContext.Ny.Find(id);
                 if (user != null)
                 {
                     _dbContext.Ny.Remove(user);

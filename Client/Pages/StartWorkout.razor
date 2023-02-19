@@ -1,36 +1,35 @@
 ﻿@page "/timer"
 @using Examensarbete.Client.Components
 @using Examensarbete.Shared.Model;
+@using Newtonsoft.Json;
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject HttpClient Http
-@using Newtonsoft.Json;
 
-    <MudPaper Class="startWorkoutContainer">
+<MudPaper Class="startWorkoutContainer">
 
-        @if (Finish)
-        {
-            <WorkoutSummery />
-            <MudButton @onclick="SaveTodDb"> Save workout</MudButton>
-        }
-        else
-        {
-            <Timer @bind-Finish="Finish"></Timer>
-            <MudButton @onclick="(() => Finish = true)"> Finish Workout (test)</MudButton>
-        }
-        </MudPaper>
+    @if (Finish)
+    {
+        <WorkoutSummery />
+        <MudButton @onclick="SaveTodDb"> Save workout</MudButton>
+    }
+    else
+    {
+        <Timer @bind-Finish="Finish"></Timer>
+        <MudButton @onclick="(() => Finish = true)"> Finish Workout (test)</MudButton>
+    }
+</MudPaper>
 
-        @code {
-            public bool Finish;
-            NyWorkoutModel? newWorkout = new();
+@code {
+    public bool Finish;
+    WorkoutModel? newWorkout = new();
 
-            public async Task SaveTodDb()
-            {
-                //FUNGERAR EJ, WHYY?
-                var workouts = sessionStorage.GetItemAsync<string>("Workout");
-                var workout = sessionStorage.GetItemAsync<NyWorkoutModel>("Workout");
+    public async Task SaveTodDb()
+    {
+        var workout = await sessionStorage.GetItemAsync<string>("Workout");
+        newWorkout = JsonConvert.DeserializeObject<WorkoutModel>(workout);
 
-                await Http.PostAsJsonAsync("api/Ny", workout);
-                NavigationManger.NavigateTo("/");
-            }
-        }
+        await Http.PostAsJsonAsync("api/Ny", newWorkout);
+        NavigationManger.NavigateTo("/");
+    }
+}

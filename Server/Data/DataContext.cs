@@ -29,9 +29,6 @@ namespace Examensarbete.Server.Data
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     
-        //oklart vad denna gör
         public DbSet<ExerciseModel> Exercises { get; set; }
-        //Behöver mer göras här??
-        //public DbSet<WorkoutModel> Workout { get; set; }
     }
 }

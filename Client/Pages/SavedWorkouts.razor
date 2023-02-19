@@ -1,11 +1,9 @@
 ﻿@page "/saved-workout"
-@inject HttpClient Http
 @using Examensarbete.Shared.Model;
-@using Newtonsoft.Json;
 @inject ExerciseService exerciseService;
 
 <MudPaper Class="savedWorkouts">
-    @foreach (var date in exerciseService.workoutList)
+    @foreach (var date in exerciseService.WorkoutList)
     {
 
         <ul>
@@ -25,18 +23,11 @@
 
 @code {
 
-
     protected override async Task OnInitializedAsync()
     {
-
         base.OnInitializedAsync();
-
-        //var hej = await Http.GetFromJsonAsync<NyWorkoutModel>("api/Ny");
-        await exerciseService.Test();
-
+        await exerciseService.GetWorkout();
         return;
-
     }
-
 }
 
