@@ -4,7 +4,7 @@
 @inject ExerciseService exerciseService;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
-<MudPaper Class="pickExercise" Elevation="0">
+<MudPaper Class="pageContainer" Elevation="0">
 
     <MudGrid>
 
@@ -16,7 +16,7 @@
         {
             @foreach (var item in exerciseService.ExerciseList)
             {
-                <MudItem sm="4" sx="12">
+                <MudItem sm="4" sx="4">
                     <MudCard Class="@(item.isActive ? "" :"activeExercise")"
                              @onclick="(() => PickExercise(item))">@item.Name</MudCard>
                         </MudItem>

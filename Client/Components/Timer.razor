@@ -1,7 +1,7 @@
 ﻿@using Examensarbete.Client.Components
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
-        <MudPaper Class="pa-8" Elevation="0">
+        <MudPaper Class="pageContainer" Elevation="0">
             @if (!SetMinutes)
             {
                 <Slider @bind-Minutes="@min" Disable="startBtn" />

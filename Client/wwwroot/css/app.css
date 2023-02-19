@@ -108,15 +108,21 @@ article {
     align-items: center;
 }
 
-.mud-button {
-    background: lightblue !important;
+    article .mud-button {
+        background: lightblue !important;
+        margin: 10px;
+        max-width: 15vw;
+        align-self:center
+    }
+
+
+.pageContainer {
+    margin: 3rem;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Pick exercise*/
-.pickExercise {
-    margin: 5rem;
-}
-
 .mud-card {
     display: flex;
     justify-content: center;
@@ -178,7 +184,7 @@ article {
 }
 
     .savedWorkouts > ul {
-    margin: 5rem;
+        margin: 5rem;
     }
 
 
