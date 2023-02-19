@@ -108,12 +108,12 @@ article {
     align-items: center;
 }
 
-    article .mud-button {
+article .mud-button {
         background: lightblue !important;
         margin: 10px;
         max-width: 15vw;
         align-self:center
-    }
+}
 
 
 .pageContainer {
@@ -139,7 +139,7 @@ article {
 
     .activeExercise:hover {
         background: grey !important;
-    }
+}
 
 
 /*Focus*/
@@ -167,9 +167,9 @@ article {
     justify-content: center;
 }
 
-    .startWorkoutContainer button {
-        margin: 5px;
-    }
+.startWorkoutContainer button {
+    margin: 5px;
+}
 
 .timerBtnContainer {
     display: flex;
@@ -183,9 +183,9 @@ article {
     min-width: 50vw;
 }
 
-    .savedWorkouts > ul {
-        margin: 5rem;
-    }
+.savedWorkouts > ul {
+    margin: 5rem;
+}
 
 
 @media screen and (max-width: 500px) {

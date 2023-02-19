@@ -9,29 +9,18 @@ namespace Examensarbete.Client
         public const string exercise = "exercise";
         public const string focus = "focus";
         public const string home = "home";
-
-
     }
 
     public class Navigation
     {
         [Inject]
-        NavigationManager nav { get; set; }
-        private readonly NavigationManager _navMagager;
+        NavigationManager navigamtion { get; set; }
 
         public void Navigate(string url)
         {
-            nav.NavigateTo(url);
-            //_navMagager.NavigateTo(url);
-            //NavigationManger.NavigateTo(url);
+            navigamtion.NavigateTo(url);
+
         }
-
-        //public Navigation(NavigationManager navManager)
-        //{
-        //    _navMagager = navManager;
-        //}
-       
-
     }
 }
 

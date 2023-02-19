@@ -3,15 +3,16 @@
 @inject ExerciseService exerciseService;
 
 <MudPaper Class="savedWorkouts">
-    @foreach (var date in exerciseService.WorkoutList)
+    @foreach (var workout in exerciseService.WorkoutList)
     {
         <ul>
-            <li><h3>@date.Exercise</h3></li>
-            <li>@date.Focus</li>
-            <li>@date.Repetition reps</li>
-            <li>@date.Rounds rounds</li>
-            <li>Total time: @date.TotalTime min</li>
-            <li>@date.Date.Value.Date.ToShortDateString()</li>
+            <li><h3>@workout.Exercise</h3></li>
+            <li>@workout.Focus</li>
+            <li>@workout.Repetition reps</li>
+            <li>@workout.Rounds rounds</li>
+            <li>Total time: @workout.TotalTime min</li>
+            <li>@workout.Date.Value.Date.ToShortDateString()</li>
+            <MudButton OnClick="(() => Delete(workout.id))">delete</MudButton>
         </ul>
         <MudScrollToTop>
             <MudFab Color="Color.Tertiary" Icon="@Icons.Material.Filled.ArrowCircleUp" />
@@ -25,8 +26,20 @@
     protected override async Task OnInitializedAsync()
     {
         base.OnInitializedAsync();
-        await exerciseService.GetWorkout();
+        await GetWorkout();
         return;
     }
-}
 
+    public async Task GetWorkout()
+    {
+        await exerciseService.GetWorkout();
+        StateHasChanged();
+    }
+
+    public async void Delete(int? id)
+    {
+        await exerciseService.DeleteWorkout(id);
+        GetWorkout();
+    }
+
+}

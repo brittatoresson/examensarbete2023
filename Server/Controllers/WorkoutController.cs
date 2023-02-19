@@ -78,6 +78,21 @@ namespace Examensarbete.Server.Controllers
             _context.SaveChanges();
         }
 
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            WorkoutModel workout = _context.Ny.Where(x => x.id.Equals(id)).FirstOrDefault();
 
+            if (workout != null)
+            {
+                _context.Ny.Remove(workout);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentNullException();
+            }
+
+        }
     }
 }
