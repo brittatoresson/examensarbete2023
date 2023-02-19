@@ -1,10 +1,6 @@
-﻿//using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Json;
 using Examensarbete.Shared.Model;
-//using Microsoft.AspNetCore.Components;
-//using Newtonsoft.Json;
-//using static Examensarbete.Client.Pages.PickExercisePage;
 
 namespace Examensarbete.Client.Services.ExerciseService
 {
@@ -20,32 +16,32 @@ namespace Examensarbete.Client.Services.ExerciseService
         public List<WorkoutModel>? WorkoutList { get; set; } = new();
         public List<ExerciseModel>? ExerciseList { get; set; } = new();
         public ExerciseModel? Exercise { get; set; } = new();
+        public WorkoutModel? Workout { get; set; } = new();
 
         public async Task<ExerciseModel> GetSingelEx(int id)
         {
             Exercise = await _http.GetFromJsonAsync<ExerciseModel>($"api/test/{id}");
             if (Exercise != null)
                 return Exercise;
-            throw new Exception("Hero not found!");
+            throw new Exception("Not found!");
         }
 
         public async Task GetExercises()
         {
-            var result = await _http.GetFromJsonAsync<List<ExerciseModel>>("api/test");
+            var result = await _http.GetFromJsonAsync<List<ExerciseModel>>("api/exercise");
             ExerciseList = result;
         }
 
             public async Task GetWorkout()
         {
-            var result = await _http.GetFromJsonAsync<List<WorkoutModel>>("api/Ny");
+            var result = await _http.GetFromJsonAsync<List<WorkoutModel>>("api/workout");
             WorkoutList = result;
         }
 
-        public async Task CreateWorkout(List<ExerciseModel> exercise)
+        public async Task CreateWorkout(WorkoutModel workout)
         {
-            var result = await _http.PostAsJsonAsync("api/test", exercise);
-            var response = await result.Content.ReadFromJsonAsync<ExerciseModel>();
-            Exercise = response;
+            var result = await _http.PostAsJsonAsync("api/workout", workout);
+            var response = result.StatusCode;
         }
     }
 }

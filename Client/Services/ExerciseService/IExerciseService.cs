@@ -8,6 +8,8 @@ namespace Examensarbete.Client.Services.ExerciseService
         List<ExerciseModel> ExerciseList { get; set; }
         Task GetExercises();
         Task<ExerciseModel> GetSingelEx(int id);
-        Task CreateWorkout(List<ExerciseModel> exercise);
+        Task CreateWorkout(WorkoutModel exercise);
+        //Task CreateWorkout(ExerciseModel exercise);
+        //Task CreateWorkout(List<ExerciseModel> exercise);
     }
 }

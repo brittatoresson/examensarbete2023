@@ -17,8 +17,6 @@
     }
 
 </MudPaper>
-@*<MudButton @onclick="SaveTodDb"> Save workout TEST</MudButton>*@
-
 
 @code {
     WorkoutModel? newWorkout = new();
@@ -26,9 +24,6 @@
     protected override async Task OnInitializedAsync()
     {
         base.OnInitialized();
-
-        //CreateWorkout createWorkout1 = new();
-        //newWorkout = await createWorkout1.GetAndSetWorkout();
 
         var focus = await sessionStorage.GetItemAsync<string>("Focus");
         var workout = await sessionStorage.GetItemAsync<string>("Workout");
@@ -47,12 +42,4 @@
 
         await sessionStorage.SetItemAsync<WorkoutModel>("Workout", newWorkout);
     }
-
-
-    //public async Task SaveTodDb()
-    //{
-
-    //    await Http.PostAsJsonAsync("api/Ny", newWorkout);
-    //    NavigationManger.NavigateTo("/");
-    //}
 }

@@ -8,11 +8,11 @@ namespace Examensarbete.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TestController : ControllerBase
+    public class ExerciseController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public TestController(DataContext context)
+        public ExerciseController(DataContext context)
         {
             _context = context;
         }

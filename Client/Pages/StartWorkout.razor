@@ -5,6 +5,7 @@
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject HttpClient Http
+@inject ExerciseService exerciseService;
 
 <MudPaper Class="startWorkoutContainer">
 
@@ -29,7 +30,8 @@
         var workout = await sessionStorage.GetItemAsync<string>("Workout");
         newWorkout = JsonConvert.DeserializeObject<WorkoutModel>(workout);
 
-        await Http.PostAsJsonAsync("api/Ny", newWorkout);
+        await exerciseService.CreateWorkout(newWorkout);
+
         NavigationManger.NavigateTo("/");
     }
 }
