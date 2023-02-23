@@ -16,6 +16,14 @@ namespace Examensarbete.Client
             return randomExercise;
         }
 
+        public List<ExerciseModel> ShuffelList(List<ExerciseModel> pickExercise)
+        {
+            Random random = new();
+            pickExercise.Count();
+            var shuffled = pickExercise.OrderBy(_ => random.Next()).ToList();
+            return shuffled;
+        }
+
         public int RandomRepetitions(int maxReps)
         {
             Random random = new();

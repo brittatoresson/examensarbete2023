@@ -1,34 +1,46 @@
 ﻿@page "/saved-workout"
 @using Examensarbete.Shared.Model;
+@using Examensarbete.Client.Components;
 @inject ExerciseService exerciseService;
 
 <MudPaper Class="savedWorkouts">
-    @foreach (var workout in exerciseService.WorkoutList)
+    @if (exerciseService.WorkoutList.Count < 1)
     {
-        <ul>
-            <li><h3>@workout.Exercise</h3></li>
-            <li>@workout.Focus</li>
-            <li>@workout.Repetition reps</li>
-            <li>@workout.Rounds rounds</li>
-            <li>Total time: @workout.TotalTime min</li>
-            <li>@workout.Date.Value.Date.ToShortDateString()</li>
-            <MudButton OnClick="(() => Delete(workout.id))">delete</MudButton>
-        </ul>
-        <MudScrollToTop>
-            <MudFab Color="Color.Tertiary" Icon="@Icons.Material.Filled.ArrowCircleUp" />
-        </MudScrollToTop>
+        <LoadingSpinner></LoadingSpinner>
+    }
+    else
+    {
+        @foreach (var workout in exerciseService.WorkoutList)
+        {
+            <ul>
+                @foreach (var item in workout.Exercises)
+                {
+                    <li>@item.exercise, @item.Repetition reps</li>
+                }
+                <li>@workout.Exercise ex </li>
+                <li>@workout.Rounds rounds</li>
+                <li>Total time: @workout.TotalTime min</li>
+                <li>@workout.Date.Value.Date.ToShortDateString()</li>
 
+                @*<MudButton OnClick="(() => Delete(workout.id))">delete</MudButton>*@
+
+            </ul>
+            <MudScrollToTop>
+                <MudFab Color="Color.Tertiary" Icon="@Icons.Material.Filled.ArrowCircleUp" />
+            </MudScrollToTop>
+        }
     }
 </MudPaper>
+
+
 
 @code {
 
     protected override async Task OnInitializedAsync()
     {
-        base.OnInitializedAsync();
-        await GetWorkout();
-        return;
+        await exerciseService.GetWorkout();
     }
+
 
     public async Task GetWorkout()
     {

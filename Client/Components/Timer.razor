@@ -4,15 +4,15 @@
         <MudPaper Class="pageContainer" Elevation="0">
             @if (!SetMinutes)
             {
-                <Slider @bind-Minutes="@min" Disable="startBtn" />
-                <MudButton @onclick="(() => SetMinutes = true)" Disabled="@(min > 0 ? false: true)">Next</MudButton>
+                <Slider @bind-Minutes="@Minutes" Disable="StartBtn" />
+                <MudButton @onclick="(() => SetMinutes = true)" Disabled="@(Minutes > 0 ? false: true)">Next</MudButton>
             }
             else
             {
-                @if (!startBtn)
+                @if (!StartBtn)
                 {
                     <WorkoutSummery></WorkoutSummery>
-                    <MudButton @onclick="StartTimer" Color="Color.Primary" Disabled="@(min > 0 ? false: true)">Go!</MudButton>
+                    <MudButton @onclick="StartTimer" Color="Color.Primary" Disabled="@(Minutes > 0 ? false: true)">Go!</MudButton>
                 }
                 else
                 {
@@ -27,11 +27,11 @@
         </MudPaper>
   
 @code {
-    public int min;
+    public int Minutes;
     public TimeSpan TimeLeft;
     public TimeSpan StartTime;
     public bool pause;
-    public bool startBtn;
+    public bool StartBtn;
     public bool SetMinutes;
 
     [Parameter]
@@ -48,8 +48,8 @@
 
     public async Task StartTimer()
     {
-        startBtn = true;
-        TimeLeft = new TimeSpan(0, min, 0);
+        StartBtn = true;
+        TimeLeft = new TimeSpan(0, Minutes, 0);
         StartTime = TimeLeft;
         StateHasChanged();
 
@@ -86,11 +86,11 @@
 
     public void StopTimer()
     {
-        startBtn = false;
+        StartBtn = false;
         SetMinutes = false;
         pause = false;
         TimeLeft = new TimeSpan(0, 0, 1);
-        min = 0;
+        Minutes = 0;
         StateHasChanged();
     }
 }

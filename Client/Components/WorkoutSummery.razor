@@ -9,10 +9,14 @@
     {
         <MudText>Sammanfattning</MudText>
         <ul>
-            <li>@newWorkout.Exercise</li>
+            @foreach (var item in newWorkout.Exercises)
+            {
+                <li>@item.exercise, @item.Repetition reps</li>
+            }
+            @*<li>@newWorkout.Exercise</li>*@
             <li>Type: @newWorkout.Focus</li>
-            <li>Repetitions: @newWorkout.Repetition </li>
-            <li>Total time: @newWorkout.TotalTime min</li>
+            <li> @(newWorkout.Repetition > 0 ? @newWorkout.Repetition +"repetitions" : "") </li>
+<li>Total time: @newWorkout.TotalTime min</li>
         </ul>
     }
 

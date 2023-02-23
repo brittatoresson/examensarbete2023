@@ -4,10 +4,10 @@
 
 @code {
     [Parameter]
-    public string? Url { get; set;}
+    public string? Url { get; set; }
 
-        public void Navigate()
-        {
-            NavigationManger.NavigateTo(Url);
-        }
+    public void Navigate()
+    {
+        NavigationManger.NavigateTo(Url);
     }
+}

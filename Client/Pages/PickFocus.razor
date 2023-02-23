@@ -4,7 +4,6 @@
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
 <MudPaper Class="pageContainer" Elevation="0">
-@*<MudPaper Class="positionCenter" Elevation="0">*@
 
     @foreach (var item in focus)
     {
@@ -16,6 +15,7 @@
     {
         <NavigationButton Url="timer" />
     }
+
 </MudPaper>
 
 @code {

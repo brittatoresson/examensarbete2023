@@ -13,7 +13,7 @@ namespace Examensarbete.Client.Services.ExerciseService
             _http = http;
         }
 
-        public List<WorkoutModel>? WorkoutList { get; set; } = new();
+        public List<WorkoutModel>? WorkoutList = new List<WorkoutModel>();
         public List<ExerciseModel>? ExerciseList { get; set; } = new();
         public ExerciseModel? Exercise { get; set; } = new();
         public WorkoutModel? Workout { get; set; } = new();
@@ -32,10 +32,11 @@ namespace Examensarbete.Client.Services.ExerciseService
             ExerciseList = result;
         }
 
-            public async Task GetWorkout()
+        public async Task<List<WorkoutModel>?> GetWorkout()
         {
             var result = await _http.GetFromJsonAsync<List<WorkoutModel>>("api/workout");
             WorkoutList = result;
+            return WorkoutList;
         }
 
         public async Task CreateWorkout(WorkoutModel workout)

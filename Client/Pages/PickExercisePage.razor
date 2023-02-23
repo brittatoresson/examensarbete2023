@@ -26,11 +26,12 @@
     @if (pickExercise.Count > 0)
     {
 
-        @*<MudButton @onclick="SaveExercises">Save</MudButton>*@
         <NavigationButton Url="focus" />
     }
 
 </MudPaper>
+
+<MudButton OnClick="Test"> TEST</MudButton>
 
 @code {
     List<ExerciseModel> pickExercise = new();
@@ -45,14 +46,43 @@
     {
         exercise.isActive = true;
         pickExercise.Add(exercise);
-        SaveExercise();
+        var shuffledList = createWorkout.ShuffelList(pickExercise);
+
+        SaveExercise(shuffledList);
     }
 
-    public async Task SaveExercise()
+    public async Task SaveExercise(List<ExerciseModel> shuffledList)
     {
         WorkoutModel workout = new();
         var randomExercise = createWorkout.RandomExercise(pickExercise);
         workout.Exercise = randomExercise.Name;
+
+        List<Exercises> exercise = new();
+
+        int id = 115;
+        int WorkoutModelid = 91;
+        foreach (var item in shuffledList)
+        {
+            id = id + 1;
+            Exercises ex = new();
+            ex.exercise = item.Name;
+            ex.id = id;
+            ex.WorkoutModelid = id;
+            ex.Repetition = createWorkout.RandomRepetitions(50);
+            exercise.Add(ex);
+        }
+
+        workout.Exercises = exercise;
+        workout.WorkoutModelid = WorkoutModelid;
+
         await sessionStorage.SetItemAsync("Workout", workout);
+    }
+
+    public async Task Test()
+    {
+        var shuffledList = createWorkout.ShuffelList(pickExercise);
+        WorkoutModel workout = new();
+        await exerciseService.CreateWorkout(workout);
+
     }
 }
