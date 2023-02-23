@@ -20,7 +20,7 @@ namespace Examensarbete.Server.Services
         {
             try
             {
-                return _dbContext.Ny.ToList();
+                return _dbContext.Workout.ToList();
             }
             catch
             {
@@ -34,7 +34,7 @@ namespace Examensarbete.Server.Services
         {
             try
             {
-                _dbContext.Ny.Add(user);
+                _dbContext.Workout.Add(user);
                 _dbContext.SaveChanges();
             }
             catch
@@ -60,7 +60,7 @@ namespace Examensarbete.Server.Services
         {
             try
             {
-                WorkoutModel? user = _dbContext.Ny.Find(id);
+                WorkoutModel? user = _dbContext.Workout.Find(id);
                 if (user != null)
                 {
                     return user;
@@ -80,10 +80,10 @@ namespace Examensarbete.Server.Services
         {
             try
             {
-                WorkoutModel? user = _dbContext.Ny.Find(id);
+                WorkoutModel? user = _dbContext.Workout.Find(id);
                 if (user != null)
                 {
-                    _dbContext.Ny.Remove(user);
+                    _dbContext.Workout.Remove(user);
                     _dbContext.SaveChanges();
                 }
                 else

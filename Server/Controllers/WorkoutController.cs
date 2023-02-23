@@ -22,10 +22,10 @@ namespace Examensarbete.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<WorkoutModel>>> GetData()
         {
-            var exercise = await _context.Exercises.ToListAsync();
+            var exercise = await _context.ExercisesList.ToListAsync();
             List<WorkoutModel>? workouts = new();
 
-                 workouts = await _context.Ny.ToListAsync();
+                 workouts = await _context.Workout.ToListAsync();
             foreach (var item in exercise)
             {
                 //var workout = await _context.Ny.Where(x => x.id.Equals(item.WorkoutModelid)).FirstOrDefaultAsync();
@@ -40,26 +40,26 @@ namespace Examensarbete.Server.Controllers
         [HttpPost]
         public void Post(WorkoutModel workout)
         {
-            Exercises exercises = new();
+            ExercisesListModel exercises = new();
             foreach (var item in workout.Exercises)
             {
                 exercises = item;
-                _context.Exercises.Add(exercises);
+                _context.ExercisesList.Add(exercises);
                 _context.SaveChanges();
             }
 
-            _context.Ny.Add(workout);
+            _context.Workout.Add(workout);
             _context.SaveChanges();
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            WorkoutModel workout = _context.Ny.Where(x => x.id.Equals(id)).FirstOrDefault();
+            WorkoutModel workout = _context.Workout.Where(x => x.id.Equals(id)).FirstOrDefault();
 
             if (workout != null)
             {
-                _context.Ny.Remove(workout);
+                _context.Workout.Remove(workout);
                 _context.SaveChanges();
             }
             else

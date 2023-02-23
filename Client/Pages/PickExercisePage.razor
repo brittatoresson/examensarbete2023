@@ -57,14 +57,14 @@
         var randomExercise = createWorkout.RandomExercise(pickExercise);
         workout.Exercise = randomExercise.Name;
 
-        List<Exercises> exercise = new();
+        List<ExercisesListModel> exercise = new();
 
         int id = 115;
         int WorkoutModelid = 91;
         foreach (var item in shuffledList)
         {
             id = id + 1;
-            Exercises ex = new();
+            ExercisesListModel ex = new();
             ex.exercise = item.Name;
             ex.id = id;
             ex.WorkoutModelid = id;
