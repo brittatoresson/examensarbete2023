@@ -10,4 +10,3 @@ namespace Examensarbete.Shared.Model
         public bool isActive;
     }
 }
-

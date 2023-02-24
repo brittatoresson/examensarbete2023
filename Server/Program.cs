@@ -1,7 +1,7 @@
 ﻿using Examensarbete.Server.Interface;
 using Examensarbete.Server.Data;
 using Examensarbete.Server.Models;
-using Examensarbete.Server.Services;
+//using Examensarbete.Server.Services;
 using Examensarbete.Server.Controllers;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -14,12 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-//Behövs båda?
+//Ta bort???
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString:DefaultConnection"]));
 builder.Services.AddDbContext<DatabaseContextNy>
 (options =>
 options.UseSqlServer(builder.Configuration["ConnectionString:DefaultConnection"]));
-builder.Services.AddTransient<INyManager, NyManager>();
+//Ta bort??
+//builder.Services.AddTransient<INyManager, NyManager>();
 
 var app = builder.Build();
 

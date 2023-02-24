@@ -16,22 +16,20 @@
         {
             @foreach (var item in exerciseService.ExerciseList)
             {
-                <MudItem sm="4" sx="4">
+                <MudItem xs="4" sm="4">
                     <MudCard Class="@(item.isActive ? "" :"activeExercise")"
-                             @onclick="(() => PickExercise(item))">@item.Name</MudCard>
-                        </MudItem>
-                    }
+                         @onclick="(() => PickExercise(item))">@item.Name
+                    </MudCard>
+                </MudItem>
+            }
         }
     </MudGrid>
     @if (pickExercise.Count > 0)
     {
-
         <NavigationButton Url="focus" />
     }
 
 </MudPaper>
-
-<MudButton OnClick="Test"> TEST</MudButton>
 
 @code {
     List<ExerciseModel> pickExercise = new();
@@ -76,13 +74,5 @@
         workout.WorkoutModelid = WorkoutModelid;
 
         await sessionStorage.SetItemAsync("Workout", workout);
-    }
-
-    public async Task Test()
-    {
-        var shuffledList = createWorkout.ShuffelList(pickExercise);
-        WorkoutModel workout = new();
-        await exerciseService.CreateWorkout(workout);
-
     }
 }

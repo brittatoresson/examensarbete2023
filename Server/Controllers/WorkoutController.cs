@@ -25,7 +25,7 @@ namespace Examensarbete.Server.Controllers
             var exercise = await _context.ExercisesList.ToListAsync();
             List<WorkoutModel>? workouts = new();
 
-                 workouts = await _context.Workout.ToListAsync();
+             workouts = await _context.Workout.ToListAsync();
             foreach (var item in exercise)
             {
                 //var workout = await _context.Ny.Where(x => x.id.Equals(item.WorkoutModelid)).FirstOrDefaultAsync();

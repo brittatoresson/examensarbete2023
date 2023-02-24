@@ -115,11 +115,11 @@ article .mud-button {
         align-self:center
 }
 
-
 .pageContainer {
-    margin: 3rem;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
+    text-align: center;
 }
 
 /* Pick exercise*/
@@ -188,9 +188,19 @@ article .mud-button {
 }
 
 
+svg {
+    color:white !important;
+}
+
 @media screen and (max-width: 500px) {
     .startWorkoutContainer {
         min-width: 70vw;
         min-height: 100vw;
+    }
+
+    .mud-card {
+        width: 25vw;
+        height: 25vw;
+        padding:1rem;
     }
 }
