@@ -36,15 +36,5 @@ namespace Examensarbete.Server.Controllers
 
             return Ok(exercise);
         }
-
-        //[HttpPost]
-        //public async Task<ActionResult<ExerciseModel>> CreateWorkout(ExerciseModel workout)
-        //{
-        //    _context.Exercises.Add(workout);
-        //    await _context.SaveChangesAsync();
-        //    //return Ok(workout);
-        //    return Ok(await GetData());
-        //}
-
     }
 }

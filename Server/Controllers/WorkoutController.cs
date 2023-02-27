@@ -3,7 +3,6 @@ using Examensarbete.Server.Interface;
 using Examensarbete.Shared.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Examensarbete.Server.Models;
 using Examensarbete.Server.Data;
 
 namespace Examensarbete.Server.Controllers
@@ -12,9 +11,9 @@ namespace Examensarbete.Server.Controllers
     [ApiController]
     public class WorkoutController : ControllerBase
     {
-        private readonly DatabaseContextNy _context;
+        private readonly DataBaseContext _context;
 
-        public WorkoutController(DatabaseContextNy context)
+        public WorkoutController(DataBaseContext context)
         {
             _context = context;
         }

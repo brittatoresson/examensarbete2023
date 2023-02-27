@@ -23,7 +23,6 @@ namespace Examensarbete.Server.Data
                  new ExerciseModel { ID = 3, Name = "Row", Type = "Steady" }
                 );
 
-           //Behövs denna?
             OnModelCreatingPartial(modelBuilder);
         }
 

@@ -34,14 +34,10 @@
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Data\" />
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
-    <None Remove="Models\" />
     <None Remove="Interface\" />
-    <None Remove="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Interface\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 </Project>

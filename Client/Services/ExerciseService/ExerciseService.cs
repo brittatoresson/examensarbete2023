@@ -18,6 +18,8 @@ namespace Examensarbete.Client.Services.ExerciseService
         public ExerciseModel? Exercise { get; set; } = new();
         public WorkoutModel? Workout { get; set; } = new();
 
+        //TRY CATCH
+
         public async Task<ExerciseModel> GetSingelEx(int id)
         {
             Exercise = await _http.GetFromJsonAsync<ExerciseModel>($"api/test/{id}");
@@ -47,9 +49,7 @@ namespace Examensarbete.Client.Services.ExerciseService
 
         public async Task DeleteWorkout(int? id)
         {
-            //Googla detta tack
             var uri = $"api/workout/{id}";
-
             var result = await _http.DeleteAsync(uri);
             var response = result.StatusCode;
         }

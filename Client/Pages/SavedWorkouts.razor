@@ -12,15 +12,22 @@
     {
         @foreach (var workout in exerciseService.WorkoutList)
         {
+            //SKA SummerKOmponenten användas här??
             <ul>
+                @if (workout.Focus == "Interval")
+                {
+                    <li>Intervall</li>
+                    <li>On: @workout.IntervallOn min</li>
+                    <li>Rest: @workout.IntervallOff min</li>
+                    <li>@workout.Rounds rounds</li>
+                }
                 @foreach (var item in workout.Exercises)
                 {
                     <li>@item.exercise, @item.Repetition reps</li>
                 }
-                <li>@workout.Exercise ex </li>
-                <li>@workout.Rounds rounds</li>
                 <li>Total time: @workout.TotalTime min</li>
                 <li>@workout.Date.Value.Date.ToShortDateString()</li>
+
 
                 <MudButton OnClick="(() => Delete(workout.id))">delete</MudButton>
 

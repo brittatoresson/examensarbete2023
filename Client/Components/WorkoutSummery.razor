@@ -9,14 +9,20 @@
     {
         <MudText>Sammanfattning</MudText>
         <ul>
+            @if (newWorkout.Focus == "Interval")
+            {
+                <li>Intervall</li>
+                <li>On: @newWorkout.IntervallOn min</li>
+                <li>Rest: @newWorkout.IntervallOff min</li>
+                <li>@newWorkout.Rounds rounds</li>
+            }
             @foreach (var item in newWorkout.Exercises)
             {
                 <li>@item.exercise, @item.Repetition reps</li>
             }
-            @*<li>@newWorkout.Exercise</li>*@
             <li>Type: @newWorkout.Focus</li>
             <li> @(newWorkout.Repetition > 0 ? @newWorkout.Repetition +"repetitions" : "") </li>
-<li>Total time: @newWorkout.TotalTime min</li>
+            <li>Total time: @newWorkout.TotalTime min</li>
         </ul>
     }
 
@@ -30,6 +36,9 @@
         base.OnInitialized();
 
         var focus = await sessionStorage.GetItemAsync<string>("Focus");
+        //var focus = await sessionStorage.GetItemAsync<string>("Focus");
+        //var test = JsonConvert.DeserializeObject<WorkoutModel>(focus);
+
         var workout = await sessionStorage.GetItemAsync<string>("Workout");
         var time = await sessionStorage.GetItemAsync<int>("Time");
         newWorkout = JsonConvert.DeserializeObject<WorkoutModel>(workout);
@@ -37,7 +46,8 @@
         newWorkout.Focus = focus;
         newWorkout.Date = DateTime.Now;
 
-        //TEST
+
+
         CreateWorkout createWorkout = new();
         var GetRoundSRepsFocus = createWorkout.GetFocusArea(focus);
         newWorkout.Repetition = GetRoundSRepsFocus.Repetition;

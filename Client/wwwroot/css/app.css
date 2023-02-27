@@ -108,12 +108,13 @@ article {
     align-items: center;
 }
 
-article .mud-button {
+    article .mud-button {
         background: lightblue !important;
         margin: 10px;
         max-width: 15vw;
-        align-self:center
-}
+        min-width: 10vw;
+        align-self: center
+    }
 
 .pageContainer {
     margin: 1rem;
@@ -127,8 +128,8 @@ article .mud-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 15vw;
-    height: 15vw;
+    width: 10vw;
+    height: 10vw;
     background: lightgrey !important;
     cursor: pointer;
 }
@@ -139,15 +140,17 @@ article .mud-button {
 
     .activeExercise:hover {
         background: grey !important;
+    }
+
+
+.mud-grid-spacing-xs-3 > .mud-grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
 /*Focus*/
-/*.positionCenter {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}*/
 
 .focusCard {
     width: 20vw;
@@ -160,16 +163,16 @@ article .mud-button {
 /*Timer*/
 .startWorkoutContainer {
     min-width: 50vw;
-    min-height: 30vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    padding: 1rem;
 }
 
-.startWorkoutContainer button {
-    margin: 5px;
-}
+    .startWorkoutContainer button {
+        margin: 5px;
+    }
 
 .timerBtnContainer {
     display: flex;
@@ -183,13 +186,13 @@ article .mud-button {
     min-width: 50vw;
 }
 
-.savedWorkouts > ul {
-    margin: 5rem;
-}
+    .savedWorkouts > ul {
+        margin: 5rem;
+    }
 
 
 svg {
-    color:white !important;
+    color: white !important;
 }
 
 @media screen and (max-width: 500px) {
@@ -201,6 +204,6 @@ svg {
     .mud-card {
         width: 25vw;
         height: 25vw;
-        padding:1rem;
+        padding: 1rem;
     }
 }

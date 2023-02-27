@@ -5,10 +5,10 @@
 
 <MudPaper Class="pageContainer" Elevation="0">
 
-    @foreach (var item in focus)
+    @foreach (var item in setFocus)
     {
 
-            <MudCard Class="focusCard" @onclick="(() => SetFocus(item))">@item.Name</MudCard>
+            <MudCard Class="@(item.IsActive ? "focusCard" :"activeExercise focusCard")" @onclick="(() => SetFocus(item))">@item.Name</MudCard>
     }
 
     @if (hasFocusArea)
@@ -22,25 +22,24 @@
     public class Focus
     {
         public string Name;
+        public bool IsActive = false;
     }
     public bool hasFocusArea;
 
-    List<Focus> focus = new();
+    List<Focus> setFocus = new();
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        focus.Add(new Focus { Name = "Intervall" });
-        focus.Add(new Focus { Name = "Steady" });
-        focus.Add(new Focus { Name = "Strength" });
-        focus.Add(new Focus { Name = "Teknik" });
-        focus.Add(new Focus { Name = "Uthållighet" });
+        setFocus.Add(new Focus { Name = "Interval", IsActive = false });
+        setFocus.Add(new Focus { Name = "Steady", IsActive = false });
+        setFocus.Add(new Focus { Name = "Strength", IsActive = false });
     }
 
     public async Task SetFocus(Focus focus)
     {
+        focus.IsActive = !focus.IsActive;
+        hasFocusArea = setFocus.Exists(x => x.IsActive == true);
         await sessionStorage.SetItemAsync("Focus", focus.Name);
-        hasFocusArea = true;
-
     }
 }

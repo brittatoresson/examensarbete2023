@@ -56,7 +56,7 @@ namespace Examensarbete.Client
             WorkoutModel workout = new();
             switch (focus)
             {
-                case "Intervall":
+                case "Interval":
                     workout = Intervall();
                     break;
                 case "Steady":
