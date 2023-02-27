@@ -15,7 +15,7 @@
                 }
                 else
                 {
-                    <MudText>@TimeLeft</MudText>
+                    <MudText Typo="Typo.h4">@TimeLeft</MudText>
                     <div class="timerBtnContainer">
                     <MudButton @onclick="PauseTimer"> @(pause ? "resume" : "pause")</MudButton>
                     <MudButton @onclick="StopTimer"> Stop</MudButton>

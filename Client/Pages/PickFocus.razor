@@ -3,17 +3,18 @@
 @using Examensarbete.Client.Components
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
+<NavigationButton Url="exercise" Placeholder="Back" />
 <MudPaper Class="pageContainer" Elevation="0">
 
     @foreach (var item in setFocus)
     {
 
-            <MudCard Class="@(item.IsActive ? "focusCard" :"activeExercise focusCard")" @onclick="(() => SetFocus(item))">@item.Name</MudCard>
+        <MudCard Class="@(item.IsActive ? "focusCard" :"activeExercise focusCard")" @onclick="(() => SetFocus(item))">@item.Name</MudCard>
     }
 
     @if (hasFocusArea)
     {
-        <NavigationButton Url="timer" />
+        <NavigationButton Url="timer" Placeholder="Next" />
     }
 
 </MudPaper>

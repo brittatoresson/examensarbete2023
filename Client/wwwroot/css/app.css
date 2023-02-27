@@ -111,7 +111,7 @@ article {
     article .mud-button {
         background: lightblue !important;
         margin: 10px;
-        max-width: 15vw;
+        max-width: 30vw;
         min-width: 10vw;
         align-self: center
     }
@@ -121,6 +121,8 @@ article {
     display: flex;
     flex-direction: column;
     text-align: center;
+    justify-content: center;
+    min-height: 50vh;
 }
 
 /* Pick exercise*/
@@ -142,16 +144,13 @@ article {
         background: grey !important;
     }
 
-
 .mud-grid-spacing-xs-3 > .mud-grid-item {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-
 /*Focus*/
-
 .focusCard {
     width: 20vw;
     height: 10vw;
@@ -163,7 +162,7 @@ article {
 /*Timer*/
 .startWorkoutContainer {
     min-width: 50vw;
-    height: 100vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -186,13 +185,25 @@ article {
     min-width: 50vw;
 }
 
-    .savedWorkouts > ul {
-        margin: 5rem;
+    .savedWorkouts > ul > li:first-child {
+        font-weight: bold;
     }
 
 
 svg {
     color: white !important;
+}
+
+article ul {
+    padding: 2rem;
+}
+
+.mud-icon-button {
+    background-color: lightblue !important;
+    color: black;
+    width: 50px;
+    height: 50px;
+    align-self: flex-start
 }
 
 @media screen and (max-width: 500px) {

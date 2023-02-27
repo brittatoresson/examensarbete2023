@@ -1,10 +1,23 @@
 ﻿@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 
-<MudButton @onclick="Navigate">Next</MudButton>
+
+@if (Placeholder != "Back")
+{
+
+    <MudButton @onclick="Navigate"> @Placeholder</MudButton>
+}
+else
+{
+
+    <MudIconButton @onclick="Navigate" Icon="@Icons.Material.Filled.ArrowBack"></MudIconButton>
+}
+
 
 @code {
     [Parameter]
     public string? Url { get; set; }
+    [Parameter]
+    public string? Placeholder { get; set; }
 
     public void Navigate()
     {

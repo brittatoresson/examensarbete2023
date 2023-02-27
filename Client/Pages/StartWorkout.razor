@@ -4,9 +4,9 @@
 @using Newtonsoft.Json;
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
-@inject HttpClient Http
 @inject ExerciseService exerciseService;
 
+<NavigationButton Url="focus" Placeholder="Back" />
 <MudPaper Class="startWorkoutContainer">
 
     @if (Finish)
@@ -19,6 +19,7 @@
         <Timer @bind-Finish="Finish"></Timer>
         <MudButton @onclick="(() => Finish = true)"> Finish Workout (test)</MudButton>
     }
+
 </MudPaper>
 
 @code {
@@ -29,9 +30,7 @@
     {
         var workout = await sessionStorage.GetItemAsync<string>("Workout");
         newWorkout = JsonConvert.DeserializeObject<WorkoutModel>(workout);
-
         await exerciseService.CreateWorkout(newWorkout);
-
         NavigationManger.NavigateTo("/");
     }
 }

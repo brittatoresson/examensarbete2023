@@ -14,6 +14,7 @@
         {
             //SKA SummerKOmponenten användas här??
             <ul>
+                <li>@workout.Date.Value.Date.ToShortDateString()</li>
                 @if (workout.Focus == "Interval")
                 {
                     <li>Intervall</li>
@@ -26,7 +27,6 @@
                     <li>@item.exercise, @item.Repetition reps</li>
                 }
                 <li>Total time: @workout.TotalTime min</li>
-                <li>@workout.Date.Value.Date.ToShortDateString()</li>
 
 
                 <MudButton OnClick="(() => Delete(workout.id))">delete</MudButton>

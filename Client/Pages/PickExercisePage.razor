@@ -18,15 +18,16 @@
             {
                 <MudItem xs="4" sm="4">
                     <MudCard Class="@(item.isActive ? "" :"activeExercise")"
-                         @onclick="(() => PickExercise(item))">@item.Name
-                    </MudCard>
-                </MudItem>
-            }
+                             @onclick="(() => PickExercise(item))">
+                        @item.Name
+                        </MudCard>
+                    </MudItem>
+                }
         }
     </MudGrid>
     @if (pickExercise.Count > 0)
     {
-        <NavigationButton Url="focus" />
+        <NavigationButton Url="focus" Placeholder="Next"/>
     }
 
 </MudPaper>
@@ -57,8 +58,8 @@
 
         List<ExercisesListModel> exercise = new();
 
-        int id = 125;
-        int WorkoutModelid = 93;
+        int id = 130;
+        int WorkoutModelid = 94;
         foreach (var item in shuffledList)
         {
             id = id + 1;
