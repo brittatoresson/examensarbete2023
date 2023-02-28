@@ -46,7 +46,19 @@ namespace Examensarbete.Client
         public WorkoutModel Steady()
         {
             WorkoutModel workout = new();
-            var rounds = RandomRepetitions(100);
+            var repetitions = RandomRepetitions(100);
+            var rounds = RandomRepetitions(10);
+            workout.Repetition = repetitions;
+            workout.Rounds = rounds;
+            return workout;
+        }
+
+        public WorkoutModel Strength()
+        {
+            WorkoutModel workout = new();
+            var repetitions = RandomRepetitions(20);
+            var rounds = RandomRepetitions(5);
+            workout.Repetition = repetitions;
             workout.Rounds = rounds;
             return workout;
         }
@@ -63,10 +75,10 @@ namespace Examensarbete.Client
                     workout = Steady();
                     break;
                 case "Strength":
-                    //workout = Strength();
+                    workout = Strength();
                     break;
                 default:
-                    // code block
+                    workout = Steady();
                     break;
             }
             return workout;

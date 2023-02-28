@@ -4,7 +4,7 @@
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 @inject HttpClient Http
 
-<MudPaper Class="positionCenter" Elevation="0">
+<MudPaper Class="" Elevation="0">
     @if (!String.IsNullOrEmpty(newWorkout.Exercise))
     {
         <MudText Typo="Typo.h4">Summary</MudText>
@@ -36,17 +36,12 @@
         base.OnInitialized();
 
         var focus = await sessionStorage.GetItemAsync<string>("Focus");
-        //var focus = await sessionStorage.GetItemAsync<string>("Focus");
-        //var test = JsonConvert.DeserializeObject<WorkoutModel>(focus);
-
         var workout = await sessionStorage.GetItemAsync<string>("Workout");
         var time = await sessionStorage.GetItemAsync<int>("Time");
         newWorkout = JsonConvert.DeserializeObject<WorkoutModel>(workout);
         newWorkout.TotalTime = time;
         newWorkout.Focus = focus;
         newWorkout.Date = DateTime.Now;
-
-
 
         CreateWorkout createWorkout = new();
         var GetRoundSRepsFocus = createWorkout.GetFocusArea(focus);

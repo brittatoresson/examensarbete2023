@@ -39,8 +39,13 @@
 
     public async Task SetFocus(Focus focus)
     {
+        foreach (var item in setFocus)
+        {
+            item.IsActive = false;
+        }
+
         focus.IsActive = !focus.IsActive;
-        hasFocusArea = setFocus.Exists(x => x.IsActive == true);
+        hasFocusArea = true;
         await sessionStorage.SetItemAsync("Focus", focus.Name);
     }
 }
