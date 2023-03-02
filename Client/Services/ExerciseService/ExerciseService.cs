@@ -53,5 +53,11 @@ namespace Examensarbete.Client.Services.ExerciseService
             var result = await _http.DeleteAsync(uri);
             var response = result.StatusCode;
         }
+
+        public async Task UpdateExercise(WorkoutModel workout)
+        {
+            var result = await _http.PutAsJsonAsync($"api/workout", workout);
+            var response = result.StatusCode;
+        }
     }
 }

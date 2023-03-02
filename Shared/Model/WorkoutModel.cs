@@ -22,5 +22,6 @@ namespace Examensarbete.Shared.Model
         public string? Focus { get; set; }
         public int? IntervallOn { get; set; }
         public int? IntervallOff { get; set; }
+        public string? Comment { get; set; }
     }
 }

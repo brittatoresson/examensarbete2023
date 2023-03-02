@@ -3,26 +3,28 @@
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManger;
 @inject HttpClient Http
+@inject ExerciseService exerciseService;
 
-<MudPaper Class="" Elevation="0">
+
+<MudPaper Class="summary" Elevation="0">
     @if (!String.IsNullOrEmpty(newWorkout.Exercise))
     {
         <MudText Typo="Typo.h4">Summary</MudText>
         <ul>
+            <li><MudText Typo="Typo.h6">@newWorkout.Focus</MudText></li>
             @if (newWorkout.Focus == "Interval")
             {
-                <li>Intervall</li>
                 <li>On: @newWorkout.IntervallOn min</li>
                 <li>Rest: @newWorkout.IntervallOff min</li>
-                <li>@newWorkout.Rounds rounds</li>
             }
+            <br>
             @foreach (var item in newWorkout.Exercises)
             {
                 <li>@item.exercise, @item.Repetition reps</li>
             }
-            <li>Type: @newWorkout.Focus</li>
-            <li> @(newWorkout.Repetition > 0 ? @newWorkout.Repetition +"repetitions" : "") </li>
-            <li>Total time: @newWorkout.TotalTime min</li>
+            <li> @(newWorkout.Repetition > 0 ? newWorkout.Repetition +"repetitions" : "") </li>
+            <br>
+            <li>Time cap: @newWorkout.TotalTime min</li>
         </ul>
     }
 
@@ -30,6 +32,7 @@
 
 @code {
     WorkoutModel? newWorkout = new();
+    CreateWorkout createWorkout = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -43,7 +46,6 @@
         newWorkout.Focus = focus;
         newWorkout.Date = DateTime.Now;
 
-        CreateWorkout createWorkout = new();
         var GetRoundSRepsFocus = createWorkout.GetFocusArea(focus);
         newWorkout.Repetition = GetRoundSRepsFocus.Repetition;
         newWorkout.IntervallOff = GetRoundSRepsFocus.IntervallOff;

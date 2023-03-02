@@ -24,17 +24,30 @@ namespace Examensarbete.Server.Controllers
             return Ok(exerciseList);
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<ActionResult<ExerciseModel>> GetData(int id)
-        {
-            var exercise = await _context.Exercises.FirstOrDefaultAsync(e => e.ID == id);
-            if (exercise == null)
-            {
-                return NotFound("sorry...");
-            }
+        //[HttpGet]
+        //[Route("{id}")]
+        //public async Task<ActionResult<ExerciseModel>> GetData(int id)
+        //{
+        //    var exercise = await _context.Exercises.FirstOrDefaultAsync(e => e.ID == id);
+        //    if (exercise == null)
+        //    {
+        //        return NotFound("sorry...");
+        //    }
 
-            return Ok(exercise);
-        }
+        //    return Ok(exercise);
+        //}
+
+        //public void UpdateUserDetails(ExerciseModel exercise)
+        //{
+        //    try
+        //    {
+        //        _context.Entry(exercise).State = EntityState.Modified;
+        //        _context.SaveChanges();
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
     }
 }

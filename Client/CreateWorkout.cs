@@ -24,19 +24,19 @@ namespace Examensarbete.Client
             return shuffled;
         }
 
-        public int RandomRepetitions(int maxReps)
+        public int RandomRepetitions(int min, int max)
         {
             Random random = new();
-            var randomRepetitions = random.Next(maxReps);
+            var randomRepetitions = random.Next(min, max);
             return randomRepetitions;
         }
 
         public WorkoutModel Intervall()
         {
             WorkoutModel workout = new();
-            var rounds = RandomRepetitions(20);
-            var on = RandomRepetitions(10);
-            var off = RandomRepetitions(3);
+            var rounds = RandomRepetitions(1, 20);
+            var on = RandomRepetitions(3, 10);
+            var off = RandomRepetitions(1,3);
             workout.Rounds = rounds;
             workout.IntervallOn = on;
             workout.IntervallOff = off;
@@ -46,8 +46,8 @@ namespace Examensarbete.Client
         public WorkoutModel Steady()
         {
             WorkoutModel workout = new();
-            var repetitions = RandomRepetitions(100);
-            var rounds = RandomRepetitions(10);
+            var repetitions = RandomRepetitions(1,100);
+            var rounds = RandomRepetitions(1, 10);
             workout.Repetition = repetitions;
             workout.Rounds = rounds;
             return workout;
@@ -56,8 +56,8 @@ namespace Examensarbete.Client
         public WorkoutModel Strength()
         {
             WorkoutModel workout = new();
-            var repetitions = RandomRepetitions(20);
-            var rounds = RandomRepetitions(5);
+            var repetitions = RandomRepetitions(1,20);
+            var rounds = RandomRepetitions(1,5);
             workout.Repetition = repetitions;
             workout.Rounds = rounds;
             return workout;

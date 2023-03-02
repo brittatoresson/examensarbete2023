@@ -12,25 +12,44 @@
     {
         @foreach (var workout in exerciseService.WorkoutList)
         {
-            //SKA SummerKOmponenten användas här??
-            <ul>
-                <li>@workout.Date.Value.Date.ToShortDateString()</li>
-                @if (workout.Focus == "Interval")
-                {
-                    <li>Intervall</li>
-                    <li>On: @workout.IntervallOn min</li>
-                    <li>Rest: @workout.IntervallOff min</li>
-                    <li>@workout.Rounds rounds</li>
-                }
-                @foreach (var item in workout.Exercises)
-                {
-                    <li>@item.exercise, @item.Repetition reps</li>
-                }
-                <li>Total time: @workout.TotalTime min</li>
+            <MudGrid>
+                <MudItem xs="8" sm="10">
+                    <ul>
+                        <h6> @workout.Date.Value.Date.ToShortDateString()</h6>
+                        @if (workout.Focus == "Interval")
+                        {
+                            <li>Intervall</li>
+                            <li>On: @workout.IntervallOn min</li>
+                            <li>Rest: @workout.IntervallOff min</li>
+                            <li>@workout.Rounds rounds</li>
+                        }
+                        @foreach (var item in workout.Exercises)
+                        {
+                            <li>@item.exercise, @item.Repetition reps</li>
 
-                <MudButton OnClick="(() => Delete(workout.id))">delete</MudButton>
+                        }
+                        <li>Total time: @workout.TotalTime min</li>
 
-            </ul>
+                        <MudTooltip Text="Add or update note">
+                            <li @onclick="(() => UpdateNotes(workout.id))">Note: @workout.Comment</li>
+                        </MudTooltip>
+
+                        @if (Id == workout.id)
+                        {
+                            <li>
+                                <MudInput @bind-Value="comment" Variant="Variant.Outlined" Margin="Margin.Dense" > jo </MudInput>
+                                <MudIconButton Class="hoverBtn" Icon="@Icons.Material.Filled.CheckBox" Size="Size.Small" Color="Color.Primary" @onclick="(() =>UpdateExercise(workout, comment))"></MudIconButton>
+                            </li>
+                        }
+                    </ul>
+                </MudItem>
+
+                <MudItem xs="2" sm="2">
+                    <MudIconButton Class="hoverBtn" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Primary" OnClick="(() => Delete(workout.id))"> </MudIconButton>
+                </MudItem>
+
+            </MudGrid>
+
             <MudScrollToTop>
                 <MudFab Color="Color.Tertiary" Icon="@Icons.Material.Filled.ArrowCircleUp" />
             </MudScrollToTop>
@@ -41,6 +60,9 @@
 
 
 @code {
+    string? comment;
+    int? Id;
+    bool showMinutes;
 
     protected override async Task OnInitializedAsync()
     {
@@ -60,4 +82,18 @@
         GetWorkout();
     }
 
+
+    public void UpdateNotes(int? id)
+    {
+        Id = id;
+        showMinutes = !showMinutes;
+        comment = string.Empty;
+    }
+
+    public async Task UpdateExercise(WorkoutModel workout, string comment)
+    {
+        workout.Comment = comment;
+        await exerciseService.UpdateExercise(workout);
+        Id = 0;
+    }
 }

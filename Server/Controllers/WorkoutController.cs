@@ -67,5 +67,20 @@ namespace Examensarbete.Server.Controllers
             }
 
         }
+
+        [HttpPut]
+        public void Put(WorkoutModel workout)
+        //public void Put(ExercisesListModel workout)
+        {
+            try
+            {
+                _context.Workout.Update(workout);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

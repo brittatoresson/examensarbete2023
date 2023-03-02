@@ -50,6 +50,9 @@ namespace Examensarbete.Server.Data
                 entity.Property(e => e.WorkoutModelid)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+                entity.Property(e => e.Comment)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
             OnModelCreatingPartial(modelBuilder);
         }

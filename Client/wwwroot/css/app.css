@@ -108,6 +108,19 @@ article {
     align-items: center;
 }
 
+svg {
+    color: white !important;
+}
+
+article ul {
+    margin: 1rem;
+    width: 30vw;
+}
+
+li {
+    flex-direction: row !important;
+}
+
     article .mud-button {
         background: lightblue !important;
         margin: 10px;
@@ -183,27 +196,35 @@ article {
     height: 100vh;
     overflow: scroll;
     min-width: 50vw;
+    padding: 5rem;
 }
 
     .savedWorkouts > ul > li:first-child {
         font-weight: bold;
     }
 
-
-svg {
-    color: white !important;
+.summary {
+    text-align: left;
 }
 
-article ul {
-    padding: 2rem;
-}
+/*.mud-input {
+    height: 1rem;
+}*/
 
 .mud-icon-button {
-    background-color: lightblue !important;
+    background-color: white !important;
     color: black;
     width: 50px;
     height: 50px;
     align-self: flex-start
+}
+
+.mud-icon-button .mud-icon-root.mud-svg-icon {
+        fill: lightgray;
+}
+
+.mud-icon-button:hover .mud-icon-root.mud-svg-icon {
+    fill: lightblue;
 }
 
 @media screen and (max-width: 500px) {
@@ -216,5 +237,19 @@ article ul {
         width: 25vw;
         height: 25vw;
         padding: 1rem;
+    }
+
+    .savedWorkouts {
+        padding: 0rem;
+        min-width: 70vw;
+    }
+
+    article ul {
+        margin: 1rem;
+        width: 50vw;
+    }
+
+    .mud-grid-spacing-xs-3 > .mud-grid-item {
+        align-items: stretch;
     }
 }
