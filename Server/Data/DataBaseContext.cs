@@ -32,12 +32,6 @@ namespace Examensarbete.Server.Data
             {
                 entity.ToTable("workout");
                 entity.Property(e => e.id).HasColumnName("id");
-                entity.Property(e => e.Exercise)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-                entity.Property(e => e.Repetition)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
                 entity.Property(e => e.Date)
                     .HasMaxLength(50)
                     .IsUnicode(false);

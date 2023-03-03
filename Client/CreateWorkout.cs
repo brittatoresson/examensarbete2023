@@ -34,21 +34,16 @@ namespace Examensarbete.Client
         public WorkoutModel Intervall()
         {
             WorkoutModel workout = new();
-            var rounds = RandomRepetitions(1, 20);
-            var on = RandomRepetitions(3, 10);
-            var off = RandomRepetitions(1,3);
-            workout.Rounds = rounds;
-            workout.IntervallOn = on;
-            workout.IntervallOff = off;
+            workout.Rounds = RandomRepetitions(1, 20);
+            workout.IntervallOn = RandomRepetitions(3, 10);
+            workout.IntervallOff = RandomRepetitions(1, 3);
             return workout;
         }
 
         public WorkoutModel Steady()
         {
             WorkoutModel workout = new();
-            var repetitions = RandomRepetitions(1,100);
             var rounds = RandomRepetitions(1, 10);
-            workout.Repetition = repetitions;
             workout.Rounds = rounds;
             return workout;
         }
@@ -56,9 +51,7 @@ namespace Examensarbete.Client
         public WorkoutModel Strength()
         {
             WorkoutModel workout = new();
-            var repetitions = RandomRepetitions(1,20);
             var rounds = RandomRepetitions(1,5);
-            workout.Repetition = repetitions;
             workout.Rounds = rounds;
             return workout;
         }
@@ -86,4 +79,3 @@ namespace Examensarbete.Client
 
     }
 }
-

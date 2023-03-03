@@ -5,9 +5,9 @@
 @inject HttpClient Http
 @inject ExerciseService exerciseService;
 
-
 <MudPaper Class="summary" Elevation="0">
-    @if (!String.IsNullOrEmpty(newWorkout.Exercise))
+    @if (!String.IsNullOrEmpty(newWorkout.Focus))
+    @*@if (!String.IsNullOrEmpty(newWorkout.Exercise))*@
     {
         <MudText Typo="Typo.h4">Summary</MudText>
         <ul>
@@ -16,13 +16,14 @@
             {
                 <li>On: @newWorkout.IntervallOn min</li>
                 <li>Rest: @newWorkout.IntervallOff min</li>
+                <li>Rounds: @newWorkout.Rounds </li>
             }
             <br>
             @foreach (var item in newWorkout.Exercises)
             {
                 <li>@item.exercise, @item.Repetition reps</li>
             }
-            <li> @(newWorkout.Repetition > 0 ? newWorkout.Repetition +"repetitions" : "") </li>
+            <li> @(newWorkout.Rounds > 0 ? "Rounds" + newWorkout.Rounds : "") </li>
             <br>
             <li>Time cap: @newWorkout.TotalTime min</li>
         </ul>
@@ -47,9 +48,10 @@
         newWorkout.Date = DateTime.Now;
 
         var GetRoundSRepsFocus = createWorkout.GetFocusArea(focus);
-        newWorkout.Repetition = GetRoundSRepsFocus.Repetition;
+        //newWorkout.Repetition = GetRoundSRepsFocus.Repetition;
         newWorkout.IntervallOff = GetRoundSRepsFocus.IntervallOff;
         newWorkout.IntervallOn = GetRoundSRepsFocus.IntervallOn;
+        newWorkout.Rounds = GetRoundSRepsFocus.Rounds;
 
         await sessionStorage.SetItemAsync<WorkoutModel>("Workout", newWorkout);
     }

@@ -1,5 +1,5 @@
-﻿@page "/exercise"
-@using Examensarbete.Shared.Model;
+﻿@using Examensarbete.Shared.Model;
+@page "/exercise"
 @using Examensarbete.Client.Components;
 @inject ExerciseService exerciseService;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
@@ -46,33 +46,33 @@
         exercise.isActive = true;
         pickExercise.Add(exercise);
         var shuffledList = createWorkout.ShuffelList(pickExercise);
-
         SaveExercise(shuffledList);
     }
 
     public async Task SaveExercise(List<ExerciseModel> shuffledList)
     {
         WorkoutModel workout = new();
-        var randomExercise = createWorkout.RandomExercise(pickExercise);
-        workout.Exercise = randomExercise.Name;
+        List<ExercisesListModel> exerciseList = new();
+        //var randomExercise = createWorkout.RandomExercise(pickExercise);
+        //workout.Exercise = randomExercise.Name;
 
-        List<ExercisesListModel> exercise = new();
-
-        int id = 135;
-        int WorkoutModelid = 95;
+        Random random = new Random();
+        var id = random.Next(90000);
+        //int WorkoutModelid = 99;
         foreach (var item in shuffledList)
         {
             id = id + 1;
-            ExercisesListModel ex = new();
-            ex.exercise = item.Name;
-            ex.id = id;
-            ex.WorkoutModelid = id;
-            ex.Repetition = createWorkout.RandomRepetitions(50);
-            exercise.Add(ex);
+            ExercisesListModel exercise = new();
+            exercise.exercise = item.Name;
+            exercise.id = id;
+            exercise.WorkoutModelid = id;
+            exercise.Repetition = createWorkout.RandomRepetitions(2, 50);
+            exerciseList.Add(exercise);
         }
 
-        workout.Exercises = exercise;
-        workout.WorkoutModelid = WorkoutModelid;
+        workout.Exercises = exerciseList;
+        //workout.WorkoutModelid = id;
+        //workout.WorkoutModelid = WorkoutModelid;
 
         await sessionStorage.SetItemAsync("Workout", workout);
     }

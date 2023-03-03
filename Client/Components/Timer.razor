@@ -3,7 +3,7 @@
         <MudPaper Class="pageContainer" Elevation="0">
             @if (!SetMinutes)
             {
-                <Slider @bind-Minutes="@Minutes" Disable="StartBtn" />
+                <Slider @bind-Minutes="Minutes" Disable="StartBtn" />
                 <MudButton @onclick="(() => SetMinutes = true)" Disabled="@(Minutes > 0 ? false: true)">Next</MudButton>
             }
             else

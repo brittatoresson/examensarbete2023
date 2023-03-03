@@ -28,16 +28,18 @@
                             <li>@item.exercise, @item.Repetition reps</li>
 
                         }
+                        <br />
+                        <li> @(workout.Rounds > 0 ? "Rounds: " + workout.Rounds : "") </li>
                         <li>Total time: @workout.TotalTime min</li>
 
-                        <MudTooltip Text="Add or update note">
+                        <MudTooltip Text="Add or update note" Placement="Placement.Left" Arrow="true">
                             <li @onclick="(() => UpdateNotes(workout.id))">Note: @workout.Comment</li>
                         </MudTooltip>
 
                         @if (Id == workout.id)
                         {
                             <li>
-                                <MudInput @bind-Value="comment" Variant="Variant.Outlined" Margin="Margin.Dense" > jo </MudInput>
+                                <MudInput @bind-Value="comment" Variant="Variant.Outlined" Margin="Margin.Dense"> jo </MudInput>
                                 <MudIconButton Class="hoverBtn" Icon="@Icons.Material.Filled.CheckBox" Size="Size.Small" Color="Color.Primary" @onclick="(() =>UpdateExercise(workout, comment))"></MudIconButton>
                             </li>
                         }

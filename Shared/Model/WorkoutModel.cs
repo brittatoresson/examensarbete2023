@@ -12,10 +12,10 @@ namespace Examensarbete.Shared.Model
     public class WorkoutModel
     {
         public int? id { get; set; }
-        public string? Exercise { get; set; }
+        //public string? Exercise { get; set; }
         public int? TotalTime { get; set; }
         public int? Rounds { get; set; }
-        public int? Repetition { get; set; }
+        //public int? Repetition { get; set; }
         public DateTime? Date { get; set; } = DateTime.Today;
         public int? WorkoutModelid { get; set; }
         public List<ExercisesListModel>? Exercises { get; set; }

@@ -207,10 +207,6 @@ li {
     text-align: left;
 }
 
-/*.mud-input {
-    height: 1rem;
-}*/
-
 .mud-icon-button {
     background-color: white !important;
     color: black;
@@ -225,6 +221,10 @@ li {
 
 .mud-icon-button:hover .mud-icon-root.mud-svg-icon {
     fill: lightblue;
+}
+
+.mud-tooltip-root:hover {
+    cursor: pointer;
 }
 
 @media screen and (max-width: 500px) {
