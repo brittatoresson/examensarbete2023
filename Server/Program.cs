@@ -1,5 +1,4 @@
-﻿using Examensarbete.Server.Interface;
-using Examensarbete.Server.Data;
+﻿using Examensarbete.Server.Data;
 using Examensarbete.Server.Controllers;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.ResponseCompression;

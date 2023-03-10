@@ -6,7 +6,6 @@ namespace Examensarbete.Server.Data
 {
     public partial class DataBaseContext : DbContext
     {
-
         public DataBaseContext()
         {
         }
@@ -19,7 +18,6 @@ namespace Examensarbete.Server.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
 
             modelBuilder.Entity<ExercisesListModel>(entity =>
             {
