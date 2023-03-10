@@ -17,8 +17,7 @@ namespace Examensarbete.Client.Services.ExerciseService
         public List<ExerciseModel>? ExerciseList { get; set; } = new();
         public ExerciseModel? Exercise { get; set; } = new();
         public WorkoutModel? Workout { get; set; } = new();
-
-        //TRY CATCH
+        public int statusCode;
 
         public async Task<ExerciseModel> GetSingelEx(int id)
         {
@@ -44,20 +43,20 @@ namespace Examensarbete.Client.Services.ExerciseService
         public async Task CreateWorkout(WorkoutModel workout)
         {
             var result = await _http.PostAsJsonAsync("api/workout", workout);
-            var response = result.StatusCode;
+             statusCode = (int)result.StatusCode;
         }
 
         public async Task DeleteWorkout(int? id)
         {
             var uri = $"api/workout/{id}";
             var result = await _http.DeleteAsync(uri);
-            var response = result.StatusCode;
+            statusCode = (int)result.StatusCode;
         }
 
         public async Task UpdateExercise(WorkoutModel workout)
         {
             var result = await _http.PutAsJsonAsync($"api/workout", workout);
-            var response = result.StatusCode;
+            statusCode = (int)result.StatusCode;
         }
     }
 }

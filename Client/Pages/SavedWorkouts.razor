@@ -3,7 +3,7 @@
 @using Examensarbete.Client.Components;
 @inject ExerciseService exerciseService;
 
-<MudPaper Class="savedWorkouts">
+<MudPaper Class="savedWorkouts" id="id_scroll">
     @if (exerciseService.WorkoutList.Count < 1)
     {
         <LoadingSpinner></LoadingSpinner>
@@ -16,30 +16,41 @@
                 <MudItem xs="8" sm="10">
                     <ul>
                         <h6> @workout.Date.Value.Date.ToShortDateString()</h6>
+                        <p>@workout.Focus</p>
+
                         @if (workout.Focus == "Interval")
                         {
-                            <li>Intervall</li>
+                            @*<li>Intervall</li>*@
                             <li>On: @workout.IntervallOn min</li>
                             <li>Rest: @workout.IntervallOff min</li>
                             <li>@workout.Rounds rounds</li>
                         }
-                        @foreach (var item in workout.Exercises)
+                        @if (workout.Exercises is not null)
                         {
-                            <li>@item.exercise, @item.Repetition reps</li>
-
-                        }
+                            @foreach (var item in workout.Exercises)
+                            {
+                                <li>@item.exercise, @item.Repetition reps</li>
+                            }
+                            }
+                            else
+                            {
+                                throw new ArgumentNullException("fel");
+                            }
                         <br />
                         <li> @(workout.Rounds > 0 ? "Rounds: " + workout.Rounds : "") </li>
                         <li>Total time: @workout.TotalTime min</li>
 
                         <MudTooltip Text="Add or update note" Placement="Placement.Left" Arrow="true">
-                            <li @onclick="(() => UpdateNotes(workout.id))">Note: @workout.Comment</li>
+                            <li @onclick="(() => UpdateNotes(workout.id))">
+                                @(!String.IsNullOrEmpty(workout.Comment) ? "Note: " + workout.Comment
+                            : "Add note")
+                            </li>
                         </MudTooltip>
 
                         @if (Id == workout.id)
                         {
                             <li>
-                                <MudInput @bind-Value="comment" Variant="Variant.Outlined" Margin="Margin.Dense"> jo </MudInput>
+                                <MudInput @bind-Value="comment" Variant="Variant.Outlined" Margin="Margin.Dense"> </MudInput>
                                 <MudIconButton Class="hoverBtn" Icon="@Icons.Material.Filled.CheckBox" Size="Size.Small" Color="Color.Primary" @onclick="(() =>UpdateExercise(workout, comment))"></MudIconButton>
                             </li>
                         }
@@ -57,45 +68,10 @@
             </MudScrollToTop>
         }
     }
+    <MudScrollToTop TopOffset="100"
+                    Selector="#id_scroll"
+                    VisibleCssClass="visible absolute"
+                    HiddenCssClass="invisible">
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.ArrowUpward" Color="Color.Default">Go to top</MudButton>
+    </MudScrollToTop>
 </MudPaper>
-
-
-
-@code {
-    string? comment;
-    int? Id;
-    bool showMinutes;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await exerciseService.GetWorkout();
-    }
-
-
-    public async Task GetWorkout()
-    {
-        await exerciseService.GetWorkout();
-        StateHasChanged();
-    }
-
-    public async void Delete(int? id)
-    {
-        await exerciseService.DeleteWorkout(id);
-        GetWorkout();
-    }
-
-
-    public void UpdateNotes(int? id)
-    {
-        Id = id;
-        showMinutes = !showMinutes;
-        comment = string.Empty;
-    }
-
-    public async Task UpdateExercise(WorkoutModel workout, string comment)
-    {
-        workout.Comment = comment;
-        await exerciseService.UpdateExercise(workout);
-        Id = 0;
-    }
-}

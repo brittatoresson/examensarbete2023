@@ -10,7 +10,5 @@ namespace Examensarbete.Client.Services.ExerciseService
         Task<ExerciseModel> GetSingelEx(int id);
         Task CreateWorkout(WorkoutModel exercise);
         Task DeleteWorkout(int? id);
-        //Task CreateWorkout(ExerciseModel exercise);
-        //Task CreateWorkout(List<ExerciseModel> exercise);
     }
 }

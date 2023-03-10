@@ -1,5 +1,5 @@
-﻿@using Examensarbete.Shared.Model;
-@page "/exercise"
+﻿@page "/exercise"
+@using Examensarbete.Shared.Model;
 @using Examensarbete.Client.Components;
 @inject ExerciseService exerciseService;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
@@ -53,12 +53,9 @@
     {
         WorkoutModel workout = new();
         List<ExercisesListModel> exerciseList = new();
-        //var randomExercise = createWorkout.RandomExercise(pickExercise);
-        //workout.Exercise = randomExercise.Name;
-
         Random random = new Random();
         var id = random.Next(90000);
-        //int WorkoutModelid = 99;
+
         foreach (var item in shuffledList)
         {
             id = id + 1;
@@ -71,8 +68,6 @@
         }
 
         workout.Exercises = exerciseList;
-        //workout.WorkoutModelid = id;
-        //workout.WorkoutModelid = WorkoutModelid;
 
         await sessionStorage.SetItemAsync("Workout", workout);
     }

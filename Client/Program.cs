@@ -5,8 +5,6 @@ using MudBlazor.Services;
 using Examensarbete.Client.Services.ExerciseService;
 using Blazored.SessionStorage;
 
-
-
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");

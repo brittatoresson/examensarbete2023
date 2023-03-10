@@ -7,8 +7,6 @@
     public int Minutes { get; set; }
     [Parameter]
     public bool Disable { get; set; }
-
-    //Two-way binidng behövs för att uppdatera kompoentet/värder i parentkomponenter https://blazor-university.com/components/two-way-binding/
     [Parameter]
     public EventCallback<int> MinutesChanged { get; set; }
 

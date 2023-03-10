@@ -7,7 +7,6 @@
 
 <MudPaper Class="summary" Elevation="0">
     @if (!String.IsNullOrEmpty(newWorkout.Focus))
-    @*@if (!String.IsNullOrEmpty(newWorkout.Exercise))*@
     {
         <MudText Typo="Typo.h4">Summary</MudText>
         <ul>
@@ -23,7 +22,7 @@
             {
                 <li>@item.exercise, @item.Repetition reps</li>
             }
-            <li> @(newWorkout.Rounds > 0 ? "Rounds" + newWorkout.Rounds : "") </li>
+            <li> @(newWorkout.Rounds > 0 ? "Rounds: " + newWorkout.Rounds : "") </li>
             <br>
             <li>Time cap: @newWorkout.TotalTime min</li>
         </ul>
@@ -47,11 +46,13 @@
         newWorkout.Focus = focus;
         newWorkout.Date = DateTime.Now;
 
-        var GetRoundSRepsFocus = createWorkout.GetFocusArea(focus);
-        //newWorkout.Repetition = GetRoundSRepsFocus.Repetition;
-        newWorkout.IntervallOff = GetRoundSRepsFocus.IntervallOff;
-        newWorkout.IntervallOn = GetRoundSRepsFocus.IntervallOn;
-        newWorkout.Rounds = GetRoundSRepsFocus.Rounds;
+        if (newWorkout.IntervallOff is null or 0)
+        {
+            var GetRoundSRepsFocus = createWorkout.GetFocusArea(focus);
+            newWorkout.IntervallOff = GetRoundSRepsFocus.IntervallOff;
+            newWorkout.IntervallOn = GetRoundSRepsFocus.IntervallOn;
+            newWorkout.Rounds = GetRoundSRepsFocus.Rounds;
+        }
 
         await sessionStorage.SetItemAsync<WorkoutModel>("Workout", newWorkout);
     }
